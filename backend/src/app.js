@@ -67,7 +67,7 @@ if (config.env === 'prod') {
   app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, { explorer: true }));
 }
 
-const issuesRouter = require('./routes/issues');
+const issuesRouter = require('./routes/assemblyLines');
 
 app.use(logger('dev'));
 app.use(express.json());

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const issuesController = require('../controller/issues');
-const issueRequestDto = require('./dto/issueRecordRequestDto');
+const assemblyLinesController = require('../controller/assemblyLines');
+const assemblyLineRequestDto = require('./dto/assemblyLineRecordRequestDto');
 
 /**
  * @swagger
@@ -12,7 +12,7 @@ const issueRequestDto = require('./dto/issueRecordRequestDto');
  *          200:
  *              description: list of issues
  */
-router.get('/', issuesController.readIssue);
+router.get('/', assemblyLinesController.readAssemblyLine);
 
 /**
  * @swagger
@@ -29,7 +29,7 @@ router.get('/', issuesController.readIssue);
  *                  description: a single issue object
  *
  */
-router.get('/:id', issuesController.readIssue);
+router.get('/:id', assemblyLinesController.readAssemblyLine);
 
 /**
  * @swagger
@@ -54,7 +54,7 @@ router.get('/:id', issuesController.readIssue);
  *          400:
  *              description: problem
  */
-router.post('/', issueRequestDto, issuesController.createIssue);
+router.post('/', assemblyLineRequestDto, assemblyLinesController.createAssemblyLine);
 
 /**
  * @swagger
@@ -73,7 +73,7 @@ router.post('/', issueRequestDto, issuesController.createIssue);
  *                  description: error object
  *
  */
-router.put('/:id/in-progress', issuesController.stateChangeToInProgress);
+router.put('/:id/in-progress', assemblyLinesController.stateChangeToInProgress);
 
 /**
  * @swagger
@@ -91,7 +91,7 @@ router.put('/:id/in-progress', issuesController.stateChangeToInProgress);
  *              400:
  *                  description: error object
  */
-router.put('/:id/resolve', issuesController.stateChangeToResolved);
+router.put('/:id/resolve', assemblyLinesController.stateChangeToResolved);
 /**
  * @swagger
  * /issues/{id}/close:
@@ -109,6 +109,6 @@ router.put('/:id/resolve', issuesController.stateChangeToResolved);
  *                  description: error object
  *
  */
-router.put('/:id/close', issuesController.stateChangeToClosed);
+router.put('/:id/close', assemblyLinesController.stateChangeToClosed);
 
 module.exports = router;

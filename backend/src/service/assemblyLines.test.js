@@ -1,7 +1,7 @@
 jest.mock('../model/issue');
-const Issue = require('../model/issue');
-const issueState = require('../model/issueState');
-const service = require('./issues');
+const Issue = require('../model/assemblyLine');
+const issueState = require('../model/assemblyLineState');
+const service = require('./assemblyLines');
 
 const each = require('jest-each').default;
 

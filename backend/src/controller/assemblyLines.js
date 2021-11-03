@@ -1,5 +1,5 @@
 const { validationResult } = require('express-validator');
-const service = require('../service/issues');
+const service = require('../service/assemblyLines');
 const winston = require('winston');
 
 const logger = winston.createLogger({
@@ -14,22 +14,22 @@ const logger = winston.createLogger({
   ]
 });
 
-exports.createIssue = (req, res, next) => {
+exports.createAssemblyLine = (req, res, next) => {
   if (!validationResult(req).isEmpty()) {
     res.status(400).send({ errors: validationResult(req).array() });
     return;
   }
-  service.createIssue(req.body).then(issue => res.send(issue)).catch(err => res.status(400).send(err));
+  service.createAssemblyLine(req.body).then(issue => res.send(issue)).catch(err => res.status(400).send(err));
 };
 
-exports.readIssue = (req, res, next) => {
+exports.readAssemblyLine = (req, res, next) => {
   if (req.params.id === undefined) {
-    service.readIssues()
+    service.createAssemblyLine()
       .then(issues => res.send(issues))
       .catch(err => res.send({ error: err }));
     return;
   }
-  service.readIssuesById(req.params.id)
+  service.readAssemblyLinesById(req.params.id)
     .then(issues => res.send(issues === null ? {} : issues))
     .catch(err => res.send({ error: err }));
 };
