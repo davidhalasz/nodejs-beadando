@@ -75,6 +75,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/issues', issuesRouter);
+app.use('/assembly_lines', issuesRouter);
 
 module.exports = app;

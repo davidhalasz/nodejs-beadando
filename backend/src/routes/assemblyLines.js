@@ -5,7 +5,7 @@ const assemblyLineRequestDto = require('./dto/assemblyLineRecordRequestDto');
 
 /**
  * @swagger
- * /issues:
+ * /assembly_lines:
  *  get:
  *      summary: Fetches all issues
  *      responses:
@@ -16,7 +16,7 @@ router.get('/', assemblyLinesController.readAssemblyLine);
 
 /**
  * @swagger
- * /issues/{id}:
+ * /assembly_lines/{id}:
  *      get:
  *          summary: get issue by id
  *          parameters:
@@ -33,7 +33,7 @@ router.get('/:id', assemblyLinesController.readAssemblyLine);
 
 /**
  * @swagger
- * /issues:
+ * /assembly_lines:
  *  post:
  *      summary: create a new issue
  *      requestBody:
@@ -43,11 +43,12 @@ router.get('/:id', assemblyLinesController.readAssemblyLine);
  *                   type: object
  *                   required: true
  *                   properties:
- *                      title:
+ *                      name:
  *                          type: string
- *                          example: Issue 1
- *                      description:
- *                          type: string
+ *                          example: Assembly Line 1
+ *                      numberOfSteps:
+ *                          type: Number
+ *                          example: 1
  *      responses:
  *          200:
  *              description: success

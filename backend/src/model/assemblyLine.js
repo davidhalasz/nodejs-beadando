@@ -1,23 +1,50 @@
 const mongoose = require('mongoose');
 
-const IssueSchema = new mongoose.Schema({
-  title: {
+const AssemblyLineSchema = new mongoose.Schema({
+  name: {
     type: String,
-    required: true
+    required: true,
+    index: true,
+    unique: true
   },
-  description: {
-    type: String,
-    required: true
-  },
-  state: {
-    type: String,
+  steps: {
+    type: [{
+      inputBuffer: {
+        type: [
+          {
+            name: {
+              type: String,
+              required: true
+            },
+            quantity: {
+              type: Number,
+              default: 0
+            }
+          }],
+        required: true
+      },
+      outputBuffer: {
+        type: [
+          {
+            name: {
+              type: String,
+              required: true
+            },
+            quantity: {
+              type: Number,
+              default: 0
+            }
+          }],
+        required: true
+      }
+    }],
     required: true
   }
 });
 
-IssueSchema.pre('findOneAndUpdate', next => {
+AssemblyLineSchema.pre('findOneAndUpdate', next => {
   console.log('pre update hook');
   next();
 });
 
-module.exports = mongoose.model('issue', IssueSchema);
+module.exports = mongoose.model('assemblyLine', AssemblyLineSchema);

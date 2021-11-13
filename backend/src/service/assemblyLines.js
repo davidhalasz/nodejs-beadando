@@ -14,9 +14,17 @@ const logger = winston.createLogger({
   ]
 });
 
-const createAssemblyLine = (aline) => {
+const createAssemblyLine = ({ name, numberOfSteps }) => {
   return new Promise((resolve, reject) => {
-    AssemblyLine.create({ ...aline, state: assemblyLineState.OPEN })
+    const step = {
+      inputBuffer: [],
+      outputBuffer: []
+    };
+    const assemblyLine = {
+      name: name,
+      steps: [...Array(parseInt(numberOfSteps)).keys()].map(() => step)
+    };
+    AssemblyLine.create(assemblyLine)
       .then((doc) => {
         resolve(doc);
       })
@@ -50,10 +58,10 @@ const changeSate = (id, state) => {
     .then(aline => {
       if (!isStateChangeAllowed(aline.state, state)) {
         logger.info(`Invalid State Change ${aline.state} => ${state}`);
-        throw new Error({ msg: `Invalid State ohange ${aline.state} => ${state}` });
+        throw new Error({ msg: `Invalid State change ${aline.state} => ${state}` });
       }
       return aline;
-    }).then(issue => {
+    }).then(aline => {
       return AssemblyLine.findByIdAndUpdate(id, { state: state }, { new: true });
     });
 };
@@ -61,8 +69,7 @@ const changeSate = (id, state) => {
 const isStateChangeAllowed = (from, to) => {
   if (from === assemblyLineState.OPEN && to === assemblyLineState.IN_PROGRESS) return true;
   if (from === assemblyLineState.IN_PROGRESS && to === assemblyLineState.RESOLVED) return true;
-  if (from === assemblyLineState.RESOLVED && [assemblyLineState.IN_PROGRESS, assemblyLineState.CLOSED].includes(to)) return true;
-  return false;
+  return from === assemblyLineState.RESOLVED && [assemblyLineState.IN_PROGRESS, assemblyLineState.CLOSED].includes(to);
 };
 
 const changeStateToInProgress = (id) => {
