@@ -29,14 +29,16 @@ exports.readAssemblyLines = (req, res, next) => {
 };
 
 exports.readAssemblyLine = (req, res, next) => {
+  /*
   if (req.params.id === undefined) {
     service.createAssemblyLine()
       .then(issues => res.send(issues))
       .catch(err => res.send({ error: err }));
     return;
   }
+  */
   service.readAssemblyLinesById(req.params.id)
-    .then(issues => res.send(issues === null ? {} : issues))
+    .then(assemblyLine => res.send(assemblyLine === null ? {} : assemblyLine))
     .catch(err => res.send({ error: err }));
 };
 

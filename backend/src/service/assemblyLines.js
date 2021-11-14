@@ -47,7 +47,7 @@ const readAssemblyLinesById = (id) => {
         resolve(documents);
       })
       .catch((err) => {
-        logger.info(`Issue Not Found with id: ${id}`);
+        logger.info(`Assembly Line Not Found with id: ${id}`);
         reject(err);
       });
   });
