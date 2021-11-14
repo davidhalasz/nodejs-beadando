@@ -2,17 +2,27 @@ const express = require('express');
 const router = express.Router();
 const assemblyLinesController = require('../controller/assemblyLines');
 const assemblyLineRequestDto = require('./dto/assemblyLineRecordRequestDto');
+const { validationResult } = require('express-validator');
+
+const validateRequest = (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    res.status(400).send(errors);
+    return;
+  }
+  next();
+};
 
 /**
  * @swagger
  * /assembly_lines:
  *  get:
- *      summary: Fetches all issues
+ *      summary: Fetches all Assembly Lines
  *      responses:
  *          200:
- *              description: list of issues
+ *              description: list of Assembly Lines
  */
-router.get('/', assemblyLinesController.readAssemblyLine);
+router.get('/', assemblyLinesController.readAssemblyLines);
 
 /**
  * @swagger
@@ -55,7 +65,7 @@ router.get('/:id', assemblyLinesController.readAssemblyLine);
  *          400:
  *              description: problem
  */
-router.post('/', assemblyLineRequestDto, assemblyLinesController.createAssemblyLine);
+router.post('/', assemblyLineRequestDto, validateRequest, assemblyLinesController.createAssemblyLine);
 
 /**
  * @swagger

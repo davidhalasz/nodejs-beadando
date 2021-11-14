@@ -22,6 +22,12 @@ exports.createAssemblyLine = (req, res, next) => {
   service.createAssemblyLine(req.body).then(issue => res.send(issue)).catch(err => res.status(400).send(err));
 };
 
+exports.readAssemblyLines = (req, res, next) => {
+  service.readAssemblyLines()
+    .then(assemblyLines => res.send(assemblyLines))
+    .catch(err => res.send({ error: err }));
+};
+
 exports.readAssemblyLine = (req, res, next) => {
   if (req.params.id === undefined) {
     service.createAssemblyLine()
