@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const assemblyLinesController = require('../controller/assemblyLines');
 const assemblyLineRequestDto = require('./dto/assemblyLineRecordRequestDto');
+const readAssemblyLineByNameDto = require('./dto/readAssemblyLineByNameDto');
 const { validationResult } = require('express-validator');
 
 const validateRequest = (req, res, next) => {
@@ -26,7 +27,7 @@ router.get('/', assemblyLinesController.readAssemblyLines);
 
 /**
  * @swagger
- * /assembly_lines/{id}:
+ * /assembly_lines/id/{id}:
  *      get:
  *          summary: get Assembly Line by id
  *          parameters:
@@ -39,7 +40,27 @@ router.get('/', assemblyLinesController.readAssemblyLines);
  *                  description: a single Assembly Line object
  *
  */
-router.get('/:id', assemblyLinesController.readAssemblyLine);
+router.get('/id/:id', assemblyLinesController.readAssemblyLine);
+
+/**
+ * @swagger
+ * /assembly_lines/name/{assembly_line}:
+ *      get:
+ *          summary: get Assembly Line by name
+ *          parameters:
+ *              -   in: path
+ *                  name: assembly_line
+ *                  type: string
+ *                  required: true
+ *                  example: ALINE-1
+ *          responses:
+ *              200:
+ *                  description: a single Assembly Line object
+ *              400:
+ *                  error
+ *
+ */
+router.get('/name/:assembly_line', readAssemblyLineByNameDto, assemblyLinesController.readAssemblyLineByName);
 
 /**
  * @swagger

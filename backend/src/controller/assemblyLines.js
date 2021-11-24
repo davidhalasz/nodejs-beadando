@@ -42,6 +42,12 @@ exports.readAssemblyLine = (req, res, next) => {
     .catch(err => res.send({ error: err }));
 };
 
+exports.readAssemblyLineByName = (req, res, next) => {
+  service.readAssemblyLineByName(req.params.assembly_line)
+    .then(assemblyLine => res.send(assemblyLine === null ? {} : assemblyLine))
+    .catch(err => res.send({ error: err }));
+};
+
 exports.stateChangeToInProgress = (req, res, next) => {
   service.changeStateToInProgress(req.params.id)
     .then(issues => res.send(issues))

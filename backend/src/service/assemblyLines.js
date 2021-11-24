@@ -53,6 +53,19 @@ const readAssemblyLinesById = (id) => {
   });
 };
 
+const readAssemblyLineByName = (assemblyLineName) => {
+  return new Promise((resolve, reject) => {
+    AssemblyLine.find({ name: assemblyLineName })
+      .then((documents) => {
+        resolve(documents);
+      })
+      .catch((err) => {
+        logger.info(`Assembly Line Not Found with name: ${assemblyLineName}`);
+        reject(err);
+      });
+  });
+};
+
 const changeSate = (id, state) => {
   return readAssemblyLinesById(id)
     .then(aline => {
@@ -86,6 +99,7 @@ module.exports = {
   createAssemblyLine: createAssemblyLine,
   readAssemblyLines: readAssemblyLines,
   readAssemblyLinesById: readAssemblyLinesById,
+  readAssemblyLineByName: readAssemblyLineByName,
   changeStateToInProgress: changeStateToInProgress,
   changeStateToResolved: changeStateToResolved,
   changeStateToClosed: changeStateToClosed
