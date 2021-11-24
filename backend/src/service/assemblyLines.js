@@ -66,6 +66,19 @@ const readAssemblyLineByName = (assemblyLineName) => {
   });
 };
 
+const deleteAssemblyLineByName = (assemblyLineName) => {
+  return new Promise((resolve, reject) => {
+    AssemblyLine.findOneAndDelete({ name: assemblyLineName })
+      .then((documents) => {
+        resolve(documents);
+      })
+      .catch((err) => {
+        logger.info(`Assembly Line Not Found with name: ${assemblyLineName}`);
+        reject(err);
+      });
+  });
+};
+
 const changeSate = (id, state) => {
   return readAssemblyLinesById(id)
     .then(aline => {
@@ -100,6 +113,7 @@ module.exports = {
   readAssemblyLines: readAssemblyLines,
   readAssemblyLinesById: readAssemblyLinesById,
   readAssemblyLineByName: readAssemblyLineByName,
+  deleteAssemblyLineByName: deleteAssemblyLineByName,
   changeStateToInProgress: changeStateToInProgress,
   changeStateToResolved: changeStateToResolved,
   changeStateToClosed: changeStateToClosed

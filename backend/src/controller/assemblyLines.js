@@ -48,6 +48,12 @@ exports.readAssemblyLineByName = (req, res, next) => {
     .catch(err => res.send({ error: err }));
 };
 
+exports.deleteAssemblyLineByName = (req, res, next) => {
+  service.deleteAssemblyLineByName(req.params.assembly_line)
+    .then(assemblyLine => res.send(assemblyLine))
+    .catch(err => res.send({ error: err }));
+};
+
 exports.stateChangeToInProgress = (req, res, next) => {
   service.changeStateToInProgress(req.params.id)
     .then(issues => res.send(issues))

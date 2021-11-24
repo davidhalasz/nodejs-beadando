@@ -3,6 +3,7 @@ const router = express.Router();
 const assemblyLinesController = require('../controller/assemblyLines');
 const assemblyLineRequestDto = require('./dto/assemblyLineRecordRequestDto');
 const readAssemblyLineByNameDto = require('./dto/readAssemblyLineByNameDto');
+const deleteAssemblyLineByNameDto = require('./dto/deleteAssemblyLineByNameDto');
 const { validationResult } = require('express-validator');
 
 const validateRequest = (req, res, next) => {
@@ -61,6 +62,26 @@ router.get('/id/:id', assemblyLinesController.readAssemblyLine);
  *
  */
 router.get('/name/:assembly_line', readAssemblyLineByNameDto, assemblyLinesController.readAssemblyLineByName);
+
+/**
+ * @swagger
+ * /assembly_lines/name/{assembly_line}:
+ *      delete:
+ *          summary: delete Assembly Line by name
+ *          parameters:
+ *              -   in: path
+ *                  name: assembly_line
+ *                  type: string
+ *                  required: true
+ *                  example: ALINE-1
+ *          responses:
+ *              200:
+ *                  description: deleted a single Assembly Line object
+ *              400:
+ *                  error
+ *
+ */
+router.delete('/name/:assembly_line', deleteAssemblyLineByNameDto, assemblyLinesController.deleteAssemblyLineByName);
 
 /**
  * @swagger
