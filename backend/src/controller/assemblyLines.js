@@ -54,22 +54,8 @@ exports.deleteAssemblyLineByName = (req, res, next) => {
     .catch(err => res.send({ error: err }));
 };
 
-exports.stateChangeToInProgress = (req, res, next) => {
-  service.changeStateToInProgress(req.params.id)
-    .then(issues => res.send(issues))
+exports.addProductToInputBuffer = (req, res, next) => {
+  service.addToInputBuffer(req.body)
+    .then(assemblyLine => res.send(assemblyLine))
     .catch(err => res.status(400).send({ error: err }));
-};
-exports.stateChangeToResolved = (req, res, next) => {
-  service.changeStateToResolved(req.params.id)
-    .then(issues => res.send(issues))
-    .catch(err => res.status(400).send({ error: err }));
-};
-
-exports.stateChangeToClosed = (req, res, next) => {
-  service.changeStateToClosed(req.params.id)
-    .then(issues => res.send(issues))
-    .catch(err => {
-      logger.error({ err: err });
-      res.status(400).send({ error: err });
-    });
 };

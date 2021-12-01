@@ -79,6 +79,25 @@ const deleteAssemblyLineByName = (assemblyLineName) => {
   });
 };
 
+const addToInputBuffer = ({ assemblyLineName, steps, prodName, prodQuantity }) => {
+  return new Promise((resolve, reject) => {
+    const filter = { name: assemblyLineName };
+    const update = { prodName: prodName, prodQuantity: prodQuantity };
+    AssemblyLine.findOneAndUpdate(filter, {
+      $push: {
+        [`steps.${steps - 1}.inputBuffer`]: update
+      }
+    }, { new: true }).then((documents) => {
+      resolve(documents);
+    }).catch((err) => {
+      logger.info('Adding product to input buffer is not success');
+      reject(err);
+    });
+  });
+};
+
+// My code ends
+
 const changeSate = (id, state) => {
   return readAssemblyLinesById(id)
     .then(aline => {
@@ -114,6 +133,7 @@ module.exports = {
   readAssemblyLinesById: readAssemblyLinesById,
   readAssemblyLineByName: readAssemblyLineByName,
   deleteAssemblyLineByName: deleteAssemblyLineByName,
+  addToInputBuffer: addToInputBuffer,
   changeStateToInProgress: changeStateToInProgress,
   changeStateToResolved: changeStateToResolved,
   changeStateToClosed: changeStateToClosed

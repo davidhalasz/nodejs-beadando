@@ -12,11 +12,11 @@ const AssemblyLineSchema = new mongoose.Schema({
       inputBuffer: {
         type: [
           {
-            name: {
+            prodName: {
               type: String,
               required: true
             },
-            quantity: {
+            prodQuantity: {
               type: Number,
               default: 0
             }
@@ -26,11 +26,11 @@ const AssemblyLineSchema = new mongoose.Schema({
       outputBuffer: {
         type: [
           {
-            name: {
+            prodName: {
               type: String,
               required: true
             },
-            quantity: {
+            prodQuantity: {
               type: Number,
               default: 0
             }
