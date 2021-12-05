@@ -18,7 +18,7 @@ class AssemblyLineRecordingForm extends React.Component{
 
     render() {
         return(
-            <div className={"p-5 border border-dark"}>
+            <div className={"mt-2 p-4 border border-dark"}>
                 <h3>Create New Assembly Line</h3>
                 <form>
                     <label htmlFor={"name"} >Assembly Line name</label>

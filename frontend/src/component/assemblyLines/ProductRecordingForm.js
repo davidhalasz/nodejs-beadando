@@ -23,7 +23,7 @@ class ProductRecordingForm extends React.Component{
 
     render() {
         return(
-            <div className={"mt-2 p-5 border border-dark"}>
+            <div className={"mt-2 p-4 border border-dark"}>
                 <h3>Add Product</h3>
                     <label htmlFor={"assemblyLineName"} >Assembly Line name</label>
                     <input type={"text"} id={"assemblyLineName"} name={"assemblyLineName"}

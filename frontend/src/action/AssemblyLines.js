@@ -64,7 +64,24 @@ const _recordProduct = ({assemblyLineName, stepNumber, prodName, prodQuantity}, 
         });
 };
 
+const _deleteAssemblyLine = ({name}) => {
+    axios.delete(`/assembly_lines/${name}`, {
+        name: name})
+        .then(() =>{
+            dispatcher.dispatch({
+                action: notificationActions.showSuccess,
+                payload: `Assembly Line deleted`
+            });
+        })
+        .catch(err => {
+            dispatcher.dispatch({
+                action: notificationActions.showFailure,
+                payload: err
+            });
+        });
+};
 export const fetchAllAssemblyLines = _fetchAllAssemblyLines;
 export const recordAssemblyLine = _recordAssemblyLine;
 export const recordProduct = _recordProduct;
+export const deleteAssemblyLine = _deleteAssemblyLine;
 
