@@ -66,10 +66,10 @@ class AssemblyLinesList extends React.Component{
                         this.state.qeAssemblyLines.map(line => {
                             return line.steps.map((step, index) => {
                                 return (
-                                    <React.Fragment key={line._id}>
+                                    <React.Fragment key={line._id + '' +index}>
                                         {step.inputBuffer.map(inp => {
                                             return (
-                                                <tr key={step._id}>
+                                                <tr key={step._id +''+ index}>
                                                     <td>{line.name}</td>
                                                     <td className="text-center">{index+1}</td>
                                                     <td>{inp.prodName}</td>
@@ -98,14 +98,14 @@ class AssemblyLinesList extends React.Component{
                     {
 
                         this.state.qeAssemblyLines.map(line => {
-                            return line.steps.map((step) => {
+                            return line.steps.map((step, index) => {
                                 return (
-                                    <React.Fragment key={line._id}>
+                                    <React.Fragment key={line._id +''+ index}>
                                         {step.outputBuffer.map(out => {
                                             return (
-                                                <tr key={step._id}>
+                                                <tr key={step._id +''+ index}>
                                                     <td>{line.name}</td>
-                                                    <td className="text-center">{line.steps.length}</td>
+                                                    <td className="text-center">{index+1}</td>
                                                     <td>{out.prodName}</td>
                                                     <td className="text-center">{out.prodQuantity}</td>
                                                 </tr>

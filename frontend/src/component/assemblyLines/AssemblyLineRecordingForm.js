@@ -25,7 +25,7 @@ class AssemblyLineRecordingForm extends React.Component{
                     <input type={"text"} id={"name"} name={"name"} value={this.state.name} onChange={this.formOnChange}/>
                     <br/>
                     <label htmlFor={"numberOfSteps"}>Number of steps</label>
-                    <input type={"text"} id={"numberOfSteps"} name={"numberOfSteps"} value={this.state.numberOfSteps} onChange={this.formOnChange}/>
+                    <input type={"number"} min={1} id={"numberOfSteps"} name={"numberOfSteps"} value={this.state.numberOfSteps} onChange={this.formOnChange}/>
                     <br/>
                     <button onClick={()=> actions.recordAssemblyLine(this.state)} className={"btn btn-primary"}>Submit</button>
                 </form>
