@@ -5,6 +5,7 @@ const assemblyLineRequestDto = require('./dto/assemblyLineRecordRequestDto');
 const readAssemblyLineByNameDto = require('./dto/readAssemblyLineByNameDto');
 const deleteAssemblyLineByNameDto = require('./dto/deleteAssemblyLineByNameDto');
 const productRequestDto = require('./dto/productRecordRequestDto');
+const findAssemblyLineDto = require('./dto/findAssemblyLineWithStepDto');
 const { validationResult } = require('express-validator');
 
 const validateRequest = (req, res, next) => {
@@ -59,7 +60,7 @@ router.get('/id/:id', assemblyLinesController.readAssemblyLine);
  *              200:
  *                  description: a single Assembly Line object
  *              400:
- *                  error
+ *                  description: error
  *
  */
 router.get('/:assembly_line', readAssemblyLineByNameDto, assemblyLinesController.readAssemblyLineByName);
@@ -79,10 +80,10 @@ router.get('/:assembly_line', readAssemblyLineByNameDto, assemblyLinesController
  *              200:
  *                  description: deleted a single Assembly Line object
  *              400:
- *                  error
+ *                  description: error
  *
  */
-router.delete('/name/:assembly_line', deleteAssemblyLineByNameDto, assemblyLinesController.deleteAssemblyLineByName);
+router.delete('/:assembly_line', deleteAssemblyLineByNameDto, assemblyLinesController.deleteAssemblyLineByName);
 
 /**
  * @swagger
@@ -173,5 +174,30 @@ router.post('/input/product', productRequestDto, validateRequest, assemblyLinesC
  *              description: problem
  */
 router.post('/output/product', productRequestDto, validateRequest, assemblyLinesController.addProductToOutputBuffer);
+
+/**
+ * @swagger
+ * /assembly_lines/{assembly_line}/{step}:
+ *      get:
+ *          summary: get the status of the assembly line
+ *          parameters:
+ *              -   in: path
+ *                  name: assembly_line
+ *                  type: string
+ *                  required: true
+ *                  example: ALINE-1
+ *              -   in: path
+ *                  name: step
+ *                  type: number
+ *                  required: true
+ *                  example: 1
+ *          responses:
+ *              200:
+ *                  description: status of the assembly line
+ *              400:
+ *                  description: problem
+ *
+ */
+router.get('/:assembly_line/:step', findAssemblyLineDto, assemblyLinesController.readAssemblyLine);
 
 module.exports = router;

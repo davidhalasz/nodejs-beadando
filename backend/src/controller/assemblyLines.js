@@ -16,6 +16,7 @@ const logger = winston.createLogger({
 
 exports.createAssemblyLine = (req, res, next) => {
   if (!validationResult(req).isEmpty()) {
+    logger.info('Validation error');
     res.status(400).send({ errors: validationResult(req).array() });
     return;
   }
@@ -49,6 +50,11 @@ exports.readAssemblyLineByName = (req, res, next) => {
 };
 
 exports.deleteAssemblyLineByName = (req, res, next) => {
+  if (!validationResult(req).isEmpty()) {
+    logger.info('Validation error');
+    res.status(400).send({ errors: validationResult(req).array() });
+    return;
+  }
   service.deleteAssemblyLineByName(req.params.assembly_line)
     .then(assemblyLine => res.send(assemblyLine))
     .catch(err => res.send({ error: err }));
@@ -64,4 +70,10 @@ exports.addProductToOutputBuffer = (req, res, next) => {
   service.addToOutputBuffer(req.body)
     .then(assemblyLine => res.send(assemblyLine))
     .catch(err => res.status(400).send({ error: err }));
+};
+
+exports.findAssemblyLineByStep = (req, res, next) => {
+  service.findAssemblyLineByStep(req.params.assembly_line, req.params.step)
+    .then(assemblyLine => res.send(assemblyLine === null ? {} : assemblyLine))
+    .catch(err => res.send({ error: err }));
 };

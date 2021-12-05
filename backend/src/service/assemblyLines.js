@@ -26,6 +26,7 @@ const createAssemblyLine = ({ name, numberOfSteps }) => {
     AssemblyLine.create(assemblyLine)
       .then((doc) => {
         resolve(doc);
+        logger.info('Assembly Line has been created.');
       })
       .catch((err) => { reject(err); });
   });
@@ -34,7 +35,10 @@ const createAssemblyLine = ({ name, numberOfSteps }) => {
 const readAssemblyLines = () => {
   return new Promise((resolve, reject) => {
     AssemblyLine.find()
-      .then((documents) => { resolve(documents); })
+      .then((documents) => {
+        logger.info('Read all Assembly Lines');
+        resolve(documents);
+      })
       .catch((err) => { reject(err); });
   });
 };
@@ -43,6 +47,7 @@ const readAssemblyLinesById = (id) => {
   return new Promise((resolve, reject) => {
     AssemblyLine.findById(id)
       .then((documents) => {
+        logger.info('Assembly Line has been found.');
         resolve(documents);
       })
       .catch((err) => {
@@ -56,6 +61,7 @@ const readAssemblyLineByName = (assemblyLineName) => {
   return new Promise((resolve, reject) => {
     AssemblyLine.find({ name: assemblyLineName })
       .then((documents) => {
+        logger.info('Assembly Line has been found by Name.');
         resolve(documents);
       })
       .catch((err) => {
@@ -69,6 +75,7 @@ const deleteAssemblyLineByName = (assemblyLineName) => {
   return new Promise((resolve, reject) => {
     AssemblyLine.findOneAndDelete({ name: assemblyLineName })
       .then((documents) => {
+        logger.info('Assembly Line has been deleted.');
         resolve(documents);
       })
       .catch((err) => {
@@ -112,6 +119,20 @@ const addToOutputBuffer = ({ assemblyLineName, steps, prodName, prodQuantity }) 
   });
 };
 
+const findAssemblyLineByStep = (assemblyLineName, step) => {
+  return new Promise((resolve, reject) => {
+    readAssemblyLineByName(assemblyLineName)
+      .then((documents) => {
+        const index = step - 1;
+        if (documents.steps.length <= index) {
+          logger.info('Step not found');
+        }
+        resolve(documents.steps[index]);
+      })
+      .catch((err) => { reject(err); });
+  });
+};
+
 module.exports = {
   createAssemblyLine: createAssemblyLine,
   readAssemblyLines: readAssemblyLines,
@@ -119,5 +140,6 @@ module.exports = {
   readAssemblyLineByName: readAssemblyLineByName,
   deleteAssemblyLineByName: deleteAssemblyLineByName,
   addToInputBuffer: addToInputBuffer,
-  addToOutputBuffer: addToOutputBuffer
+  addToOutputBuffer: addToOutputBuffer,
+  findAssemblyLineByStep: findAssemblyLineByStep
 };
