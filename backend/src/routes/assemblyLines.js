@@ -46,7 +46,7 @@ router.get('/id/:id', assemblyLinesController.readAssemblyLine);
 
 /**
  * @swagger
- * /assembly_lines/name/{assembly_line}:
+ * /assembly_lines/{assembly_line}:
  *      get:
  *          summary: get Assembly Line by name
  *          parameters:
@@ -62,11 +62,11 @@ router.get('/id/:id', assemblyLinesController.readAssemblyLine);
  *                  error
  *
  */
-router.get('/name/:assembly_line', readAssemblyLineByNameDto, assemblyLinesController.readAssemblyLineByName);
+router.get('/:assembly_line', readAssemblyLineByNameDto, assemblyLinesController.readAssemblyLineByName);
 
 /**
  * @swagger
- * /assembly_lines/name/{assembly_line}:
+ * /assembly_lines/{assembly_line}:
  *      delete:
  *          summary: delete Assembly Line by name
  *          parameters:
@@ -88,7 +88,7 @@ router.delete('/name/:assembly_line', deleteAssemblyLineByNameDto, assemblyLines
  * @swagger
  * /assembly_lines:
  *  post:
- *      summary: create a new issue
+ *      summary: create a new assembly line
  *      requestBody:
  *        content:
  *              application/json:
@@ -98,7 +98,7 @@ router.delete('/name/:assembly_line', deleteAssemblyLineByNameDto, assemblyLines
  *                   properties:
  *                      name:
  *                          type: string
- *                          example: Assembly Line 1
+ *                          example: ALINE-1
  *                      numberOfSteps:
  *                          type: Number
  *                          example: 1
@@ -114,7 +114,7 @@ router.post('/', assemblyLineRequestDto, validateRequest, assemblyLinesControlle
  * @swagger
  * /assembly_lines/input/product:
  *  post:
- *      summary: add a product to the input
+ *      summary: add a product to the input buffer
  *      requestBody:
  *       content:
  *              application/json:
@@ -141,5 +141,37 @@ router.post('/', assemblyLineRequestDto, validateRequest, assemblyLinesControlle
  *              description: problem
  */
 router.post('/input/product', productRequestDto, validateRequest, assemblyLinesController.addProductToInputBuffer);
+
+/**
+ * @swagger
+ * /assembly_lines/output/product:
+ *  post:
+ *      summary: add a product to the output buffer
+ *      requestBody:
+ *       content:
+ *              application/json:
+ *                  schema:
+ *                    type: object
+ *                    required: true
+ *                    properties:
+ *                       assemblyLineName:
+ *                          type: string
+ *                          example: ALINE-1
+ *                       steps:
+ *                          type: number
+ *                          example: 1
+ *                       prodName:
+ *                          type: string
+ *                          example: cogs
+ *                       prodQuantity:
+ *                          type: number
+ *                          example: 1
+ *      responses:
+ *          200:
+ *              description: success
+ *          400:
+ *              description: problem
+ */
+router.post('/output/product', productRequestDto, validateRequest, assemblyLinesController.addProductToOutputBuffer);
 
 module.exports = router;

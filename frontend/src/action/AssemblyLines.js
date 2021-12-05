@@ -1,8 +1,8 @@
 import axios from 'axios';
 import dispatcher from '../dispatcher/Dispatcher';
-import * as actionConstants from '../dispatcher/IssueActionConstants';
 import * as notificationActions from '../dispatcher/NotificatonActionConstants';
-import winston from 'winston';
+import winston from "winston";
+
 
 const logger = winston.createLogger({
     level: 'info',
@@ -12,11 +12,10 @@ const logger = winston.createLogger({
     ]
 });
 
-const _fetchAllTasks = () => {
-   axios.get('/issues')
+const _fetchAllAssemblyLines = () => {
+   axios.get('/assembly_lines')
        .then(resp => {
            dispatcher.dispatch({
-               action: actionConstants.refreshTasks,
                payload: resp.data
            });
        })
@@ -25,14 +24,14 @@ const _fetchAllTasks = () => {
        });
 };
 
-const _recordTask = ({title, description}) => {
-    axios.post('/issues', {
-        title: title,
-        description: description})
+const _recordAssemblyLine = ({name, numberOfSteps}) => {
+    axios.post('/assembly_lines', {
+        name: name,
+        numberOfSteps: numberOfSteps})
         .then(() =>{
             dispatcher.dispatch({
                 action: notificationActions.showSuccess,
-                payload: `Issue recorded`
+                payload: `Assembly Line recorded`
             });
         })
         .catch(err => {
@@ -43,6 +42,6 @@ const _recordTask = ({title, description}) => {
         });
 };
 
-export const fetchAllTasks = _fetchAllTasks;
-export const recordTask = _recordTask;
+export const fetchAllAssemblyLines = _fetchAllAssemblyLines;
+export const recordAssemblyLine = _recordAssemblyLine;
 

@@ -1,11 +1,11 @@
 import React from 'react';
-import store from '../../store/IssueStore';
+import store from '../../store/AssemblyLineStore';
 
-class IssuesList extends React.Component{
+class AssemblyLinesList extends React.Component{
 
     constructor(props) {
         super(props);
-        this.state = {qeTasks : []};
+        this.state = {qeAssemblyLines : []};
         this._updateStateFromStore = this._updateStateFromStore.bind(this);
     }
 
@@ -18,7 +18,7 @@ class IssuesList extends React.Component{
     }
 
     _updateStateFromStore(){
-        this.setState({qeTasks: store._qeTasks});
+        this.setState({qeAssemblyLines: store._qeAssemblyLines});
     }
 
     render() {
@@ -27,23 +27,17 @@ class IssuesList extends React.Component{
                 <table>
                     <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Title</th>
-                        <th>Description</th>
-                        <th>State</th>
-                        <th>Version</th>
+                        <th>Name</th>
+                        <th>Number of steps</th>
                     </tr>
                     </thead>
                     <tbody>
                     {
-                        this.state.qeTasks.map(({_id, title, description, state, __v}) => {
+                        this.state.qeAssemblyLines.map(({_id, name, numberOfSteps}) => {
                             return (
                                 <tr key={_id}>
-                                    <td>{_id}</td>
-                                    <td>{title}</td>
-                                    <td>{description}</td>
-                                    <td>{state}</td>
-                                    <td>{__v}</td>
+                                    <td>{name}</td>
+                                    <td>{numberOfSteps}</td>
                                 </tr>
                             );
                         })
@@ -55,4 +49,4 @@ class IssuesList extends React.Component{
     }
 }
 
-export default IssuesList;
+export default AssemblyLinesList;

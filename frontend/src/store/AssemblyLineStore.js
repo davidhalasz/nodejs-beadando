@@ -2,9 +2,9 @@ import {EventEmitter} from 'events';
 import dispatcher from "../dispatcher/Dispatcher";
 import * as actions from '../dispatcher/IssueActionConstants';
 
-class IssueStore extends EventEmitter{
+class AssemblyLineStore extends EventEmitter{
 
-    _qeTasks = [];
+    _qeAssemblyLines = [];
 
     emitChange(){
         this.emit('Change');
@@ -19,11 +19,11 @@ class IssueStore extends EventEmitter{
     }
 }
 
-const store = new IssueStore();
+const store = new AssemblyLineStore();
 export default store;
 
 dispatcher.register(({action,payload})=>{
     if(action !== actions.refreshTasks ) return;
-    store._qeTasks = payload;
+    store._qeAssemblyLines = payload;
     store.emitChange();
 });

@@ -59,3 +59,9 @@ exports.addProductToInputBuffer = (req, res, next) => {
     .then(assemblyLine => res.send(assemblyLine))
     .catch(err => res.status(400).send({ error: err }));
 };
+
+exports.addProductToOutputBuffer = (req, res, next) => {
+  service.addToOutputBuffer(req.body)
+    .then(assemblyLine => res.send(assemblyLine))
+    .catch(err => res.status(400).send({ error: err }));
+};
