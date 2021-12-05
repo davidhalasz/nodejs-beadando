@@ -24,6 +24,6 @@ export default store;
 
 dispatcher.register(({action,payload})=>{
     if(action !== actions.refreshTasks ) return;
-    store._qeAssemblyLines = payload;
+    store._qeAssemblyLines = Array.isArray(payload) ? payload : Array.of(payload);
     store.emitChange();
 });

@@ -1,3 +1,3 @@
 module.exports = {
-    refreshTasks: 'REFRESH_QUADRATIC_EQUATION_TASKS'
+    refreshTasks: 'REFRESH_ASSEMBLY_LINES'
 };

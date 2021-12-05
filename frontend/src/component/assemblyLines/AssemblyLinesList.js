@@ -1,5 +1,6 @@
 import React from 'react';
 import store from '../../store/AssemblyLineStore';
+import {Table} from "react-bootstrap";
 
 class AssemblyLinesList extends React.Component{
 
@@ -20,11 +21,13 @@ class AssemblyLinesList extends React.Component{
     _updateStateFromStore(){
         this.setState({qeAssemblyLines: store._qeAssemblyLines});
     }
+    
 
     render() {
         return(
             <div>
-                <table>
+                <h3>Assembly Lines</h3>
+                <Table striped bordered hover variant="dark">
                     <thead>
                     <tr>
                         <th>Name</th>
@@ -33,19 +36,92 @@ class AssemblyLinesList extends React.Component{
                     </thead>
                     <tbody>
                     {
-                        this.state.qeAssemblyLines.map(({_id, name, numberOfSteps}) => {
-                            return (
-                                <tr key={_id}>
-                                    <td>{name}</td>
-                                    <td>{numberOfSteps}</td>
-                                </tr>
-                            );
+
+                        this.state.qeAssemblyLines.map(line => {
+                                return (
+                                    <React.Fragment key={line._id}>
+                                                <tr>
+                                                    <td>{line.name}</td>
+                                                    <td className="text-center">{line.steps.length}</td>
+                                                </tr>
+                                    </React.Fragment>
+                                    );
                         })
                     }
                     </tbody>
-                </table>
+                </Table>
+                <h3>Input Buffers</h3>
+                <Table striped bordered hover variant="dark">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Step</th>
+                        <th>Product name</th>
+                        <th>Product quantity</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {
+
+                        this.state.qeAssemblyLines.map(line => {
+                            return line.steps.map((step, index) => {
+                                return (
+                                    <React.Fragment key={line._id}>
+                                        {step.inputBuffer.map(inp => {
+                                            return (
+                                                <tr key={step._id}>
+                                                    <td>{line.name}</td>
+                                                    <td className="text-center">{index+1}</td>
+                                                    <td>{inp.prodName}</td>
+                                                    <td className="text-center">{inp.prodQuantity}</td>
+                                                </tr>
+                                            );
+                                        })}
+                                    </React.Fragment>
+                                );
+                            });
+                        })
+                    }
+                    </tbody>
+                </Table>
+                <h3>Output Buffers</h3>
+                <Table striped bordered hover variant="dark">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Step</th>
+                        <th>Product name</th>
+                        <th>Product quantity</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {
+
+                        this.state.qeAssemblyLines.map(line => {
+                            return line.steps.map((step) => {
+                                return (
+                                    <React.Fragment key={line._id}>
+                                        {step.outputBuffer.map(out => {
+                                            return (
+                                                <tr key={step._id}>
+                                                    <td>{line.name}</td>
+                                                    <td className="text-center">{line.steps.length}</td>
+                                                    <td>{out.prodName}</td>
+                                                    <td className="text-center">{out.prodQuantity}</td>
+                                                </tr>
+                                            );
+                                        })}
+                                    </React.Fragment>
+                                );
+                            });
+                        })
+                    }
+                    </tbody>
+                </Table>
             </div>
         );
+
+
     }
 }
 

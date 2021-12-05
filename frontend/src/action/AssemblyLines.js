@@ -1,5 +1,6 @@
 import axios from 'axios';
 import dispatcher from '../dispatcher/Dispatcher';
+import * as actionConstants from '../dispatcher/IssueActionConstants';
 import * as notificationActions from '../dispatcher/NotificatonActionConstants';
 import winston from "winston";
 
@@ -16,6 +17,7 @@ const _fetchAllAssemblyLines = () => {
    axios.get('/assembly_lines')
        .then(resp => {
            dispatcher.dispatch({
+               action: actionConstants.refreshTasks,
                payload: resp.data
            });
        })

@@ -24,7 +24,8 @@
     "react-scripts": "^4.0.1",
     "regenerator-runtime": "^0.13.7",
     "winston": "^3.3.3",
-    "winston-transport-browserconsole": "^1.0.5"
+    "winston-transport-browserconsole": "^1.0.5",
+    "react-bootstrap": "^2.0.3"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
