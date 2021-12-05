@@ -21,7 +21,7 @@ class AssemblyLinesList extends React.Component{
     _updateStateFromStore(){
         this.setState({qeAssemblyLines: store._qeAssemblyLines});
     }
-    
+
 
     render() {
         return(

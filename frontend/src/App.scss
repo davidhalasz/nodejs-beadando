@@ -1,1 +1,12 @@
 @import "../node_modules/bootstrap/scss/bootstrap";
+
+label {
+  display:block;
+  position:relative;
+}
+
+input {
+  width: 100%;
+  margin-bottom: 5px;
+}
+
