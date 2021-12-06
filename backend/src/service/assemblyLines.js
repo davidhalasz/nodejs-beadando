@@ -102,6 +102,23 @@ const addToInputBuffer = ({ assemblyLineName, steps, prodName, prodQuantity }) =
   });
 };
 
+const updateProductInInputBuffer = ({ assemblyLineName, steps, prodName, prodQuantity }) => {
+  return new Promise((resolve, reject) => {
+    const filter = { name: assemblyLineName };
+    const update = { prodName: prodName, prodQuantity: prodQuantity };
+    AssemblyLine.findOneAndUpdate(filter, {
+      $set: {
+        [`steps.${steps - 1}.inputBuffer`]: update
+      }
+    }, { new: true }).then((documents) => {
+      resolve(documents);
+    }).catch((err) => {
+      logger.info('Update product in input buffer is not success');
+      reject(err);
+    });
+  });
+};
+
 const addToOutputBuffer = ({ assemblyLineName, steps, prodName, prodQuantity }) => {
   return new Promise((resolve, reject) => {
     const filter = { name: assemblyLineName };
@@ -119,17 +136,14 @@ const addToOutputBuffer = ({ assemblyLineName, steps, prodName, prodQuantity }) 
   });
 };
 
+// It doesnt work
 const findAssemblyLineByStep = (assemblyLineName, step) => {
   return new Promise((resolve, reject) => {
-    readAssemblyLineByName(assemblyLineName)
-      .then((documents) => {
+    AssemblyLine.find({ name: assemblyLineName })
+      .then((docs) => {
         const index = step - 1;
-        if (documents.steps.length <= index) {
-          logger.info('Step not found');
-        }
-        resolve(documents.steps[index]);
-      })
-      .catch((err) => { reject(err); });
+        resolve(docs.steps[index]);
+      }).catch((err) => { reject(err); });
   });
 };
 
@@ -140,6 +154,7 @@ module.exports = {
   readAssemblyLineByName: readAssemblyLineByName,
   deleteAssemblyLineByName: deleteAssemblyLineByName,
   addToInputBuffer: addToInputBuffer,
+  updateProductInInputBuffer: updateProductInInputBuffer,
   addToOutputBuffer: addToOutputBuffer,
   findAssemblyLineByStep: findAssemblyLineByStep
 };

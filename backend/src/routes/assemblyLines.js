@@ -145,6 +145,38 @@ router.post('/input/product', productRequestDto, validateRequest, assemblyLinesC
 
 /**
  * @swagger
+ * /assembly_lines/input/product:
+ *  post:
+ *      summary: update a product in the input buffer
+ *      requestBody:
+ *       content:
+ *              application/json:
+ *                  schema:
+ *                    type: object
+ *                    required: true
+ *                    properties:
+ *                       assemblyLineName:
+ *                          type: string
+ *                          example: ALINE-1
+ *                       steps:
+ *                          type: number
+ *                          example: 1
+ *                       prodName:
+ *                          type: string
+ *                          example: cogs
+ *                       prodQuantity:
+ *                          type: number
+ *                          example: 1
+ *      responses:
+ *          200:
+ *              description: product has been updated
+ *          400:
+ *              description: problem
+ */
+router.put('/input/product', productRequestDto, validateRequest, assemblyLinesController.updateProductInInputBuffer);
+
+/**
+ * @swagger
  * /assembly_lines/output/product:
  *  post:
  *      summary: add a product to the output buffer
@@ -177,7 +209,7 @@ router.post('/output/product', productRequestDto, validateRequest, assemblyLines
 
 /**
  * @swagger
- * /assembly_lines/{assembly_line}/{step}:
+ * /assembly_lines/line/{assembly_line}/{step_number}:
  *      get:
  *          summary: get the status of the assembly line
  *          parameters:
@@ -187,7 +219,7 @@ router.post('/output/product', productRequestDto, validateRequest, assemblyLines
  *                  required: true
  *                  example: ALINE-1
  *              -   in: path
- *                  name: step
+ *                  name: step_number
  *                  type: number
  *                  required: true
  *                  example: 1
@@ -198,6 +230,6 @@ router.post('/output/product', productRequestDto, validateRequest, assemblyLines
  *                  description: problem
  *
  */
-router.get('/:assembly_line/:step', findAssemblyLineDto, assemblyLinesController.readAssemblyLine);
+router.get('/line/:assembly_line/:step_number', findAssemblyLineDto, validateRequest, assemblyLinesController.readAssemblyLine);
 
 module.exports = router;

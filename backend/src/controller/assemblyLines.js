@@ -66,6 +66,12 @@ exports.addProductToInputBuffer = (req, res, next) => {
     .catch(err => res.status(400).send({ error: err }));
 };
 
+exports.updateProductInInputBuffer = (req, res, next) => {
+  service.updateProductInInputBuffer(req.body)
+    .then(assemblyLine => res.send(assemblyLine))
+    .catch(err => res.status(400).send({ error: err }));
+};
+
 exports.addProductToOutputBuffer = (req, res, next) => {
   service.addToOutputBuffer(req.body)
     .then(assemblyLine => res.send(assemblyLine))
@@ -73,7 +79,7 @@ exports.addProductToOutputBuffer = (req, res, next) => {
 };
 
 exports.findAssemblyLineByStep = (req, res, next) => {
-  service.findAssemblyLineByStep(req.params.assembly_line, req.params.step)
+  service.findAssemblyLineByStep(req.params.assembly_line, req.params.step_number)
     .then(assemblyLine => res.send(assemblyLine === null ? {} : assemblyLine))
     .catch(err => res.send({ error: err }));
 };
