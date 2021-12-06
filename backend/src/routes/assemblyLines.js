@@ -209,6 +209,38 @@ router.post('/output/product', productRequestDto, validateRequest, assemblyLines
 
 /**
  * @swagger
+ * /assembly_lines/output/product:
+ *  post:
+ *      summary: update a product in the output buffer
+ *      requestBody:
+ *       content:
+ *              application/json:
+ *                  schema:
+ *                    type: object
+ *                    required: true
+ *                    properties:
+ *                       assemblyLineName:
+ *                          type: string
+ *                          example: ALINE-1
+ *                       steps:
+ *                          type: number
+ *                          example: 1
+ *                       prodName:
+ *                          type: string
+ *                          example: cogs
+ *                       prodQuantity:
+ *                          type: number
+ *                          example: 1
+ *      responses:
+ *          200:
+ *              description: product has been updated
+ *          400:
+ *              description: problem
+ */
+router.put('/output/product', productRequestDto, validateRequest, assemblyLinesController.updateProductInOutputBuffer);
+
+/**
+ * @swagger
  * /assembly_lines/line/{assembly_line}/{step_number}:
  *      get:
  *          summary: get the status of the assembly line

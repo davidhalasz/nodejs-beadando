@@ -136,6 +136,23 @@ const addToOutputBuffer = ({ assemblyLineName, steps, prodName, prodQuantity }) 
   });
 };
 
+const updateProductInOutputBuffer = ({ assemblyLineName, steps, prodName, prodQuantity }) => {
+  return new Promise((resolve, reject) => {
+    const filter = { name: assemblyLineName };
+    const update = { prodName: prodName, prodQuantity: prodQuantity };
+    AssemblyLine.findOneAndUpdate(filter, {
+      $set: {
+        [`steps.${steps - 1}.outputBuffer`]: update
+      }
+    }, { new: true }).then((documents) => {
+      resolve(documents);
+    }).catch((err) => {
+      logger.info('Update product in input buffer is not success');
+      reject(err);
+    });
+  });
+};
+
 // It doesnt work
 const findAssemblyLineByStep = (assemblyLineName, step) => {
   return new Promise((resolve, reject) => {
@@ -156,5 +173,6 @@ module.exports = {
   addToInputBuffer: addToInputBuffer,
   updateProductInInputBuffer: updateProductInInputBuffer,
   addToOutputBuffer: addToOutputBuffer,
+  updateProductInOutputBuffer: updateProductInOutputBuffer,
   findAssemblyLineByStep: findAssemblyLineByStep
 };
