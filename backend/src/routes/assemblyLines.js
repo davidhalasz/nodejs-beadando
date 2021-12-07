@@ -30,23 +30,6 @@ router.get('/', assemblyLinesController.readAssemblyLines);
 
 /**
  * @swagger
- * /assembly_lines/id/{id}:
- *      get:
- *          summary: get Assembly Line by id
- *          parameters:
- *              -   in: path
- *                  name: id
- *                  type: integer
- *                  required: true
- *          responses:
- *              200:
- *                  description: a single Assembly Line object
- *
- */
-router.get('/id/:id', assemblyLinesController.readAssemblyLine);
-
-/**
- * @swagger
  * /assembly_lines/{assembly_line}:
  *      get:
  *          summary: get Assembly Line by name

@@ -1,10 +1,46 @@
 jest.mock('../model/assemblyLine');
-const assemblyLine = require('../model/assemblyLine');
+const AssemblyLine = require('../model/assemblyLine');
 const service = require('./assemblyLines');
+const { Promise } = require('mongoose');
 
 const ASSEMBLY_LINE_CREATE = {
   name: 'ALINE-0',
   numberOfSteps: 2
+};
+
+const PRODUCT = {
+  prodName: 'cogs',
+  prodQuantity: 5
+};
+
+const INPUT_BUFFER = {
+  inputBuffer: PRODUCT,
+  outputBuffer: []
+};
+
+const ASSEMBLY_LINE_WITH_PRODUCT = {
+  name: ASSEMBLY_LINE_CREATE.name,
+  steps: [
+    INPUT_BUFFER
+  ]
+};
+
+const EMPTY_STEP = {
+  inputBuffer: [],
+  outputBuffer: []
+};
+
+const EMPTY_ASSEMBLY_LINE = {
+  name: ASSEMBLY_LINE_CREATE.name,
+  steps: [
+    EMPTY_STEP
+  ]
+};
+
+const PRODUCT_REQUEST = {
+  name: ASSEMBLY_LINE_CREATE.name,
+  stepNumber: ASSEMBLY_LINE_CREATE.numberOfSteps,
+  ...PRODUCT
 };
 
 describe('assemblyLine Service Test', () => {
@@ -13,33 +49,81 @@ describe('assemblyLine Service Test', () => {
   });
 
   it('Test Create assemblyLine', () => {
-    assemblyLine.create.mockImplementation(() => Promise.resolve());
+    AssemblyLine.create.mockImplementation(() => Promise.resolve());
     expect.assertions(1);
     service.createAssemblyLine(ASSEMBLY_LINE_CREATE);
-    expect(assemblyLine.create).toHaveBeenCalled();
+    expect(AssemblyLine.create).toHaveBeenCalled();
   });
+
+  it('Test read all assembly lines', () => {
+    const assemblyLines = [ASSEMBLY_LINE_WITH_PRODUCT, ASSEMBLY_LINE_WITH_PRODUCT];
+    AssemblyLine.find.mockImplementation(() => Promise.resolve(assemblyLines));
+    expect.assertions(2);
+    service.readAssemblyLines().then((docs) => expect(docs).toEqual(assemblyLines));
+    expect(AssemblyLine.find).toHaveBeenCalled();
+  });
+
+  it('reads all Assembly lines with error', () => {
+    AssemblyLine.find.mockImplementation(() => Promise.reject(new Error()));
+    expect.assertions(2);
+    service.readAssemblyLines().catch(err => expect(err).toEqual(new Error()));
+    expect(AssemblyLine.find).toHaveBeenCalled();
+  });
+
+  it('Test delete assembly line by name', () => {
+    AssemblyLine.findOneAndDelete.mockImplementation(() => Promise.resolve(ASSEMBLY_LINE_CREATE));
+    expect.assertions(1);
+    service.deleteAssemblyLineByName(ASSEMBLY_LINE_CREATE.name);
+    expect(AssemblyLine.findOneAndDelete).toHaveBeenCalled();
+  });
+
+  it('Test delete assembly line by name With error', () => {
+    AssemblyLine.findOneAndDelete.mockImplementation(() => Promise.resolve(null));
+    expect.assertions(1);
+    service.deleteAssemblyLineByName(ASSEMBLY_LINE_CREATE.name)
+      .catch(err => expect(err).toEqual(new Error()));
+    expect(AssemblyLine.findOneAndDelete).toHaveBeenCalled();
+  });
+
+  it('Test add product to input buffer', () => {
+    AssemblyLine.findOneAndUpdate.mockImplementation(() => Promise.resolve(EMPTY_ASSEMBLY_LINE));
+    expect.assertions(1);
+    service.addToInputBuffer(PRODUCT_REQUEST);
+    expect(AssemblyLine.findOneAndUpdate).toHaveBeenCalled();
+  });
+
+  it('Test add product to input buffer With error', () => {
+    AssemblyLine.findOneAndUpdate.mockImplementation(() => Promise.resolve(null));
+    expect.assertions(1);
+    service.addToInputBuffer(ASSEMBLY_LINE_CREATE.name)
+      .catch(err => expect(err).toEqual(new Error()));
+    expect(AssemblyLine.findOneAndUpdate).toHaveBeenCalled();
+  });
+
+  it('Test add product to output buffer', () => {
+    AssemblyLine.findOneAndUpdate.mockImplementation(() => Promise.resolve(EMPTY_ASSEMBLY_LINE));
+    expect.assertions(1);
+    service.addToOutputBuffer(PRODUCT_REQUEST);
+    expect(AssemblyLine.findOneAndUpdate).toHaveBeenCalled();
+  });
+
+  it('Test add product to output buffer With error', () => {
+    AssemblyLine.findOneAndUpdate.mockImplementation(() => Promise.resolve(null));
+    expect.assertions(1);
+    service.addToOutputBuffer(ASSEMBLY_LINE_CREATE.name)
+      .catch(err => expect(err).toEqual(new Error()));
+    expect(AssemblyLine.findOneAndUpdate).toHaveBeenCalled();
+  });
+
+  /*
+  it('find an assembly line by name', () => {
+    AssemblyLine.find.mockImplementation(() => Promise.resolve(ASSEMBLY_LINE_WITH_PRODUCT));
+    expect.assertions(1);
+    service.readAssemblyLineByName(ASSEMBLY_LINE_WITH_PRODUCT.name);
+    expect(AssemblyLine.findOne).toHaveBeenCalled();
+  });
+   */
 /*
-  it('Test Create assemblyLine with Error', () => {
-    assemblyLine.create.mockImplementation(() => Promise.reject(new Error()));
-    expect.assertions(2);
-    service.createAssemblyLine(ASSEMBLY_LINE_CREATE);
-    expect(assemblyLine.create).toHaveBeenCalled();
-  });
-
-  it('reads all issues', () => {
-    const issues = [ASSEMBLY_LINE_CREATE, IN_PROGRESS_ISSUE, RESOLVED_ISSUE, CLOSED_ISSUE];
-    assemblyLine.find.mockImplementation(() => Promise.resolve(issues));
-    expect.assertions(2);
-    service.readIssues().then((docs) => expect(docs).toEqual(issues));
-    expect(assemblyLine.find).toHaveBeenCalled();
-  });
-
-  it('reads all issues with error', () => {
-    assemblyLine.find.mockImplementation(() => Promise.reject(new Error()));
-    expect.assertions(2);
-    service.readIssues().catch(err => expect(err).toEqual(new Error()));
-    expect(assemblyLine.find).toHaveBeenCalled();
-  });
 
   it('find an issue by ID', () => {
     expect.assertions(2);

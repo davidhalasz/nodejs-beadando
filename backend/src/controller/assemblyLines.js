@@ -29,20 +29,6 @@ exports.readAssemblyLines = (req, res, next) => {
     .catch(err => res.send({ error: err }));
 };
 
-exports.readAssemblyLine = (req, res, next) => {
-  /*
-  if (req.params.id === undefined) {
-    service.createAssemblyLine()
-      .then(issues => res.send(issues))
-      .catch(err => res.send({ error: err }));
-    return;
-  }
-  */
-  service.readAssemblyLinesById(req.params.id)
-    .then(assemblyLine => res.send(assemblyLine === null ? {} : assemblyLine))
-    .catch(err => res.send({ error: err }));
-};
-
 exports.readAssemblyLineByName = (req, res, next) => {
   service.readAssemblyLineByName(req.params.assembly_line)
     .then(assemblyLine => res.send(assemblyLine === null ? {} : assemblyLine))

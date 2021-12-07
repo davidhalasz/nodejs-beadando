@@ -5,19 +5,25 @@ import AssemblyLinesList from "./component/assemblyLines/AssemblyLinesList";
 import * as actions from './action/AssemblyLines';
 import ProductRecordingForm from "./component/assemblyLines/ProductRecordingForm";
 import DeleteAssemblyLineRecordingForm from "./component/assemblyLines/DeleteAssemblyLineRecordingForm";
+import UpdateProductForm from "./component/assemblyLines/UpdateProductForm";
 
 function App() {
   return (
     <div className={["App","container"]}>
         <div className={"row mx-4"}>
             <div className={"col-md-4"}>
-                <AssemblyLineRecordingForm/>
+                <div className={"col-md-12"}>
+                    <AssemblyLineRecordingForm/>
+                </div>
+                <div className={"col-md-12"}>
+                    <DeleteAssemblyLineRecordingForm/>
+                </div>
             </div>
             <div className={"col-md-4"}>
                 <ProductRecordingForm/>
             </div>
             <div className={"col-md-4"}>
-                <DeleteAssemblyLineRecordingForm/>
+                <UpdateProductForm/>
             </div>
         </div>
         <div className={"row"}>
