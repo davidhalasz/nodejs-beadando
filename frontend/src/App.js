@@ -26,7 +26,7 @@ function App() {
                 <UpdateProductForm/>
             </div>
         </div>
-        <div className={"row"}>
+        <div className={"row mx-4"}>
             <div className={"my-5 col-md-3"}/>
             <div className={"my-5 col-md-6"}>
                 <button className={"my-3 btn btn-info"} onClick={()=>actions.fetchAllAssemblyLines()}>Show All Assembly Lines</button>

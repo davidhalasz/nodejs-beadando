@@ -20,7 +20,8 @@ exports.createAssemblyLine = (req, res, next) => {
     res.status(400).send({ errors: validationResult(req).array() });
     return;
   }
-  service.createAssemblyLine(req.body).then(issue => res.send(issue)).catch(err => res.status(400).send(err));
+  service.createAssemblyLine(req.body)
+    .then(issue => res.send(issue)).catch(err => res.status(400).send(err));
 };
 
 exports.readAssemblyLines = (req, res, next) => {
@@ -47,32 +48,45 @@ exports.deleteAssemblyLineByName = (req, res, next) => {
 };
 
 exports.addProductToInputBuffer = (req, res, next) => {
+  if (!validationResult(req).isEmpty()) {
+    logger.info('Validation error');
+    res.status(400).send({ errors: validationResult(req).array() });
+    return;
+  }
   service.addToInputBuffer(req.body)
     .then(assemblyLine => res.send(assemblyLine))
     .catch(err => res.status(400).send({ error: err }));
 };
 
 exports.updateProductInInputBuffer = (req, res, next) => {
+  if (!validationResult(req).isEmpty()) {
+    logger.info('Validation error');
+    res.status(400).send({ errors: validationResult(req).array() });
+    return;
+  }
   service.updateProductInInputBuffer(req.body)
     .then(assemblyLine => res.send(assemblyLine))
     .catch(err => res.status(400).send({ error: err }));
 };
 
 exports.addProductToOutputBuffer = (req, res, next) => {
+  if (!validationResult(req).isEmpty()) {
+    logger.info('Validation error');
+    res.status(400).send({ errors: validationResult(req).array() });
+    return;
+  }
   service.addToOutputBuffer(req.body)
     .then(assemblyLine => res.send(assemblyLine))
     .catch(err => res.status(400).send({ error: err }));
 };
 
 exports.updateProductInOutputBuffer = (req, res, next) => {
+  if (!validationResult(req).isEmpty()) {
+    logger.info('Validation error');
+    res.status(400).send({ errors: validationResult(req).array() });
+    return;
+  }
   service.updateProductInOutputBuffer(req.body)
     .then(assemblyLine => res.send(assemblyLine))
     .catch(err => res.status(400).send({ error: err }));
 };
-/*
-exports.findAssemblyLineByStep = (req, res, next) => {
-  service.findAssemblyLineByStep(req.params.assembly_line, req.params.step_number)
-    .then(assemblyLine => res.send(assemblyLine === null ? {} : assemblyLine))
-    .catch(err => res.send({ error: err }));
-};
-*/

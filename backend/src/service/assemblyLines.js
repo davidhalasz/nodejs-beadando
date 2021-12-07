@@ -51,7 +51,9 @@ const readAssemblyLineByName = (assemblyLineName) => {
         resolve(documents);
       })
       .catch((err) => {
-        logger.info(`Assembly Line Not Found with name: ${assemblyLineName}`);
+        logger.error(
+            `Assembly Line Not Found with name: ${assemblyLineName}`
+        );
         reject(err);
       });
   });
@@ -65,13 +67,18 @@ const deleteAssemblyLineByName = (assemblyLineName) => {
         resolve(documents);
       })
       .catch((err) => {
-        logger.error(`Assembly Line Not Found with name: ${assemblyLineName}`);
+        logger.error(
+            `Assembly Line Not Found with name: ${assemblyLineName}`
+        );
         reject(err);
       });
   });
 };
 
-const addToInputBuffer = ({ assemblyLineName, steps, prodName, prodQuantity }) => {
+const addToInputBuffer = ({
+  assemblyLineName, steps,
+  prodName, prodQuantity
+}) => {
   return new Promise((resolve, reject) => {
     const filter = { name: assemblyLineName };
     const update = { prodName: prodName, prodQuantity: prodQuantity };
@@ -88,8 +95,10 @@ const addToInputBuffer = ({ assemblyLineName, steps, prodName, prodQuantity }) =
   });
 };
 
-// it send ok, but does not update
-const updateProductInInputBuffer = ({ assemblyLineName, steps, prodName, prodQuantity }) => {
+const updateProductInInputBuffer = ({
+  assemblyLineName, steps,
+  prodName, prodQuantity
+}) => {
   return new Promise((resolve, reject) => {
     const filter = { name: assemblyLineName };
     AssemblyLine.findOneAndUpdate(filter, {
@@ -113,7 +122,10 @@ const updateProductInInputBuffer = ({ assemblyLineName, steps, prodName, prodQua
   });
 };
 
-const addToOutputBuffer = ({ assemblyLineName, steps, prodName, prodQuantity }) => {
+const addToOutputBuffer = ({
+  assemblyLineName, steps,
+  prodName, prodQuantity
+}) => {
   return new Promise((resolve, reject) => {
     const filter = { name: assemblyLineName };
     const update = { prodName: prodName, prodQuantity: prodQuantity };
@@ -130,7 +142,10 @@ const addToOutputBuffer = ({ assemblyLineName, steps, prodName, prodQuantity }) 
   });
 };
 
-const updateProductInOutputBuffer = ({ assemblyLineName, steps, prodName, prodQuantity }) => {
+const updateProductInOutputBuffer = ({
+  assemblyLineName, steps,
+  prodName, prodQuantity
+}) => {
   return new Promise((resolve, reject) => {
     const filter = { name: assemblyLineName };
     const update = { prodName: prodName, prodQuantity: prodQuantity };
@@ -154,17 +169,6 @@ const updateProductInOutputBuffer = ({ assemblyLineName, steps, prodName, prodQu
   });
 };
 
-// It doesnt work
-const findAssemblyLineByStep = (assemblyLineName, step) => {
-  return new Promise((resolve, reject) => {
-    AssemblyLine.find({ name: assemblyLineName })
-      .then((docs) => {
-        const index = step - 1;
-        resolve(docs.steps[index]);
-      }).catch((err) => { reject(err); });
-  });
-};
-
 module.exports = {
   createAssemblyLine: createAssemblyLine,
   readAssemblyLines: readAssemblyLines,
@@ -173,6 +177,5 @@ module.exports = {
   addToInputBuffer: addToInputBuffer,
   updateProductInInputBuffer: updateProductInInputBuffer,
   addToOutputBuffer: addToOutputBuffer,
-  updateProductInOutputBuffer: updateProductInOutputBuffer,
-  findAssemblyLineByStep: findAssemblyLineByStep
+  updateProductInOutputBuffer: updateProductInOutputBuffer
 };

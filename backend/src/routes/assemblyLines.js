@@ -65,7 +65,8 @@ router.get('/:assembly_line', readAssemblyLineByNameDto, assemblyLinesController
  *                  description: error
  *
  */
-router.delete('/:assembly_line', deleteAssemblyLineByNameDto, assemblyLinesController.deleteAssemblyLineByName);
+router.delete('/:assembly_line', deleteAssemblyLineByNameDto,
+  assemblyLinesController.deleteAssemblyLineByName);
 
 /**
  * @swagger
@@ -91,7 +92,8 @@ router.delete('/:assembly_line', deleteAssemblyLineByNameDto, assemblyLinesContr
  *          400:
  *              description: problem
  */
-router.post('/', assemblyLineRequestDto, validateRequest, assemblyLinesController.createAssemblyLine);
+router.post('/', assemblyLineRequestDto, validateRequest,
+  assemblyLinesController.createAssemblyLine);
 
 /**
  * @swagger
@@ -123,7 +125,8 @@ router.post('/', assemblyLineRequestDto, validateRequest, assemblyLinesControlle
  *          400:
  *              description: problem
  */
-router.post('/input/product', productRequestDto, validateRequest, assemblyLinesController.addProductToInputBuffer);
+router.post('/input/product', productRequestDto, validateRequest,
+  assemblyLinesController.addProductToInputBuffer);
 
 /**
  * @swagger
@@ -155,7 +158,8 @@ router.post('/input/product', productRequestDto, validateRequest, assemblyLinesC
  *          400:
  *              description: problem
  */
-router.put('/input/product', productRequestDto, validateRequest, assemblyLinesController.updateProductInInputBuffer);
+router.put('/input/product', productRequestDto, validateRequest,
+  assemblyLinesController.updateProductInInputBuffer);
 
 /**
  * @swagger
@@ -187,7 +191,8 @@ router.put('/input/product', productRequestDto, validateRequest, assemblyLinesCo
  *          400:
  *              description: problem
  */
-router.post('/output/product', productRequestDto, validateRequest, assemblyLinesController.addProductToOutputBuffer);
+router.post('/output/product', productRequestDto, validateRequest,
+  assemblyLinesController.addProductToOutputBuffer);
 
 /**
  * @swagger
@@ -219,6 +224,7 @@ router.post('/output/product', productRequestDto, validateRequest, assemblyLines
  *          400:
  *              description: problem
  */
-router.put('/output/product', productRequestDto, validateRequest, assemblyLinesController.updateProductInOutputBuffer);
+router.put('/output/product', productRequestDto, validateRequest,
+  assemblyLinesController.updateProductInOutputBuffer);
 
 module.exports = router;

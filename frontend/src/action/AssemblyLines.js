@@ -26,6 +26,7 @@ const _fetchAllAssemblyLines = () => {
        });
 };
 
+
 const _recordAssemblyLine = ({name, numberOfSteps}) => {
     axios.post('/assembly_lines', {
         name: name,
