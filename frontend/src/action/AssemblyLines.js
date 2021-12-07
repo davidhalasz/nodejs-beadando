@@ -64,12 +64,12 @@ const _recordProduct = ({assemblyLineName, stepNumber, prodName, prodQuantity}, 
         });
 };
 
-const _updateProduct = ({assemblyLineName, stepNumber, prodName, prodQuantity}, buffer) => {
-    axios.put(`/assembly_lines/${buffer}/product`, {
-        assemblyLineName: assemblyLineName,
-        steps: stepNumber,
-        prodName: prodName,
-        prodQuantity: prodQuantity})
+const _updateProduct = ({uAssemblyLineName, uStepNumber, uProdName, uProdQuantity}, uBuffer) => {
+    axios.put(`/assembly_lines/${uBuffer}/product`, {
+        assemblyLineName: uAssemblyLineName,
+        steps: uStepNumber,
+        prodName: uProdName,
+        prodQuantity: uProdQuantity})
         .then(() =>{
             dispatcher.dispatch({
                 action: notificationActions.showSuccess,

@@ -27,12 +27,12 @@ function App() {
             </div>
         </div>
         <div className={"row"}>
-            <div className={"my-5 col-md-3"}></div>
+            <div className={"my-5 col-md-3"}/>
             <div className={"my-5 col-md-6"}>
                 <button className={"my-3 btn btn-info"} onClick={()=>actions.fetchAllAssemblyLines()}>Show All Assembly Lines</button>
                 <AssemblyLinesList/>
             </div>
-            <div className={"my-5 col-md-3"}></div>
+            <div className={"my-5 col-md-3"}/>
         </div>
     </div>
   );
