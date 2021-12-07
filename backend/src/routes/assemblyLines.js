@@ -5,7 +5,6 @@ const assemblyLineRequestDto = require('./dto/assemblyLineRecordRequestDto');
 const readAssemblyLineByNameDto = require('./dto/readAssemblyLineByNameDto');
 const deleteAssemblyLineByNameDto = require('./dto/deleteAssemblyLineByNameDto');
 const productRequestDto = require('./dto/productRecordRequestDto');
-const findAssemblyLineDto = require('./dto/findAssemblyLineWithStepDto');
 const { validationResult } = require('express-validator');
 
 const validateRequest = (req, res, next) => {
@@ -129,7 +128,7 @@ router.post('/input/product', productRequestDto, validateRequest, assemblyLinesC
 /**
  * @swagger
  * /assembly_lines/input/product:
- *  post:
+ *  put:
  *      summary: update a product in the input buffer
  *      requestBody:
  *       content:
@@ -193,7 +192,7 @@ router.post('/output/product', productRequestDto, validateRequest, assemblyLines
 /**
  * @swagger
  * /assembly_lines/output/product:
- *  post:
+ *  put:
  *      summary: update a product in the output buffer
  *      requestBody:
  *       content:
@@ -221,30 +220,5 @@ router.post('/output/product', productRequestDto, validateRequest, assemblyLines
  *              description: problem
  */
 router.put('/output/product', productRequestDto, validateRequest, assemblyLinesController.updateProductInOutputBuffer);
-
-/**
- * @swagger
- * /assembly_lines/line/{assembly_line}/{step_number}:
- *      get:
- *          summary: get the status of the assembly line
- *          parameters:
- *              -   in: path
- *                  name: assembly_line
- *                  type: string
- *                  required: true
- *                  example: ALINE-1
- *              -   in: path
- *                  name: step_number
- *                  type: number
- *                  required: true
- *                  example: 1
- *          responses:
- *              200:
- *                  description: status of the assembly line
- *              400:
- *                  description: problem
- *
- */
-router.get('/line/:assembly_line/:step_number', findAssemblyLineDto, validateRequest, assemblyLinesController.readAssemblyLine);
 
 module.exports = router;

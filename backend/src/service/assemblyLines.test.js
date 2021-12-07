@@ -114,7 +114,6 @@ describe('assemblyLine Service Test', () => {
       .catch(err => expect(err).toEqual(new Error()));
     expect(AssemblyLine.findOneAndUpdate).toHaveBeenCalled();
   });
-
   /*
   it('find an assembly line by name', () => {
     AssemblyLine.find.mockImplementation(() => Promise.resolve(ASSEMBLY_LINE_WITH_PRODUCT));
@@ -122,7 +121,8 @@ describe('assemblyLine Service Test', () => {
     service.readAssemblyLineByName(ASSEMBLY_LINE_WITH_PRODUCT.name);
     expect(AssemblyLine.findOne).toHaveBeenCalled();
   });
-   */
+ */
+
 /*
 
   it('find an issue by ID', () => {

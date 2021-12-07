@@ -88,25 +88,26 @@ const addToInputBuffer = ({ assemblyLineName, steps, prodName, prodQuantity }) =
   });
 };
 
-// it does not update but adding one more product with the same name and updated qt
+// it send ok, but does not update
 const updateProductInInputBuffer = ({ assemblyLineName, steps, prodName, prodQuantity }) => {
   return new Promise((resolve, reject) => {
-    const filter = ({ name: assemblyLineName });
+    const filter = { name: assemblyLineName };
     AssemblyLine.findOneAndUpdate(filter, {
       $set: {
-        [`steps.${steps - 1}.inputBuffer.$[p].prodQuantity`]: prodQuantity
+        [`steps.${steps - 1}.inputBuffer.$[prod].prodQuantity`]: prodQuantity
       }
     }, {
       new: true,
       arrayFilters: [
         {
-          'p.prodName': prodName
+          'prod.prodName': prodName
         }
       ]
     }).then((documents) => {
+      logger.info('Product has been updated in input buffer');
       resolve(documents);
     }).catch((err) => {
-      logger.info('updating error');
+      logger.error('Update product in input buffer is not success');
       reject(err);
     });
   });
@@ -129,20 +130,19 @@ const addToOutputBuffer = ({ assemblyLineName, steps, prodName, prodQuantity }) 
   });
 };
 
-// it does not update but adding one more output
 const updateProductInOutputBuffer = ({ assemblyLineName, steps, prodName, prodQuantity }) => {
   return new Promise((resolve, reject) => {
     const filter = { name: assemblyLineName };
     const update = { prodName: prodName, prodQuantity: prodQuantity };
     AssemblyLine.findOneAndUpdate(filter, {
-      $push: {
+      $set: {
         [`steps.${steps - 1}.outputBuffer.$[prod].prodQuantity`]: update.prodQuantity
       }
     }, {
       new: true,
       arrayFilters: [
         {
-          'prod.prodName': prodName
+          'prod.prodName': update.prodName
         }
       ]
     }).then((documents) => {

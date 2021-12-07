@@ -69,9 +69,10 @@ exports.updateProductInOutputBuffer = (req, res, next) => {
     .then(assemblyLine => res.send(assemblyLine))
     .catch(err => res.status(400).send({ error: err }));
 };
-
+/*
 exports.findAssemblyLineByStep = (req, res, next) => {
   service.findAssemblyLineByStep(req.params.assembly_line, req.params.step_number)
     .then(assemblyLine => res.send(assemblyLine === null ? {} : assemblyLine))
     .catch(err => res.send({ error: err }));
 };
+*/
