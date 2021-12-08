@@ -145,6 +145,38 @@ describe('assemblyLine Service Test', () => {
     expect(AssemblyLine.findOneAndUpdate).toHaveBeenCalled();
   });
 
+  it('Test delete product from input buffer', () => {
+    AssemblyLine.findOneAndUpdate.mockImplementation(() => Promise.resolve());
+    expect.assertions(1);
+    service.deleteProductFromInputBuffer(PRODUCT_REQUEST.name,
+      PRODUCT_REQUEST.stepNumber, PRODUCT_REQUEST.prodName);
+    expect(AssemblyLine.findOneAndUpdate).toHaveBeenCalled();
+  });
+
+  it('Test delete product from input buffer returns error', () => {
+    AssemblyLine.findOneAndUpdate.mockImplementation(() => Promise.reject(new Error()));
+    expect.assertions(2);
+    service.deleteProductFromInputBuffer(ASSEMBLY_LINE_CREATE.name)
+      .catch(err => expect(err).toEqual(new Error()));
+    expect(AssemblyLine.findOneAndUpdate).toHaveBeenCalled();
+  });
+
+  it('Test delete product from output buffer', () => {
+    AssemblyLine.findOneAndUpdate.mockImplementation(() => Promise.resolve());
+    expect.assertions(1);
+    service.deleteProductFromOutputBuffer(PRODUCT_REQUEST.name,
+      PRODUCT_REQUEST.stepNumber, PRODUCT_REQUEST.prodName);
+    expect(AssemblyLine.findOneAndUpdate).toHaveBeenCalled();
+  });
+
+  it('Test delete product from output buffer returns error', () => {
+    AssemblyLine.findOneAndUpdate.mockImplementation(() => Promise.reject(new Error()));
+    expect.assertions(2);
+    service.deleteProductFromOutputBuffer(ASSEMBLY_LINE_CREATE.name)
+      .catch(err => expect(err).toEqual(new Error()));
+    expect(AssemblyLine.findOneAndUpdate).toHaveBeenCalled();
+  });
+
   it('Test update product in output buffer', () => {
     AssemblyLine.findOneAndUpdate.mockImplementation(() => Promise.resolve());
     expect.assertions(1);
