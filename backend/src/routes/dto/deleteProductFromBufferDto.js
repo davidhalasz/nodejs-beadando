@@ -1,7 +1,7 @@
 const { body } = require('express-validator');
 
 module.exports = [
-  body('assemblyLineName', 'There is no this name').exists(),
+  body('assemblyLineName', 'Name of the assembly line is not specified').exists(),
   body('steps').exists()
     .withMessage('The step number is not specified')
     .bail()
