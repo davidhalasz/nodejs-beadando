@@ -85,6 +85,26 @@ const _updateProduct = ({uAssemblyLineName, uStepNumber, uProdName, uProdQuantit
         });
 };
 
+const _deleteProduct = (uAssemblyLineName, uStepNumber, uProdName, uBuffer) => {
+    axios.delete(`/assembly_lines/${uBuffer}/product`, { data: {
+            assemblyLineName: uAssemblyLineName,
+            steps: uStepNumber,
+            prodName: uProdName
+        }})
+        .then(() =>{
+            dispatcher.dispatch({
+                action: notificationActions.showSuccess,
+                payload: `Assembly Line recorded`
+            });
+        })
+        .catch(err => {
+            dispatcher.dispatch({
+                action: notificationActions.showFailure,
+                payload: err
+            });
+        });
+};
+
 const _deleteAssemblyLine = ({name}) => {
     axios.delete(`/assembly_lines/${name}`, {
         name: name})
@@ -106,4 +126,5 @@ export const recordAssemblyLine = _recordAssemblyLine;
 export const recordProduct = _recordProduct;
 export const deleteAssemblyLine = _deleteAssemblyLine;
 export const updateProduct = _updateProduct;
+export const deleteProduct = _deleteProduct;
 

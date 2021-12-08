@@ -164,7 +164,7 @@ router.put('/input/product', productRequestDto, validateRequest,
 
 /**
  * @swagger
- * /assembly_lines/input/product/delete:
+ * /assembly_lines/input/product:
  *  delete:
  *      summary: delete a product in the input buffer
  *      requestBody:
@@ -189,7 +189,7 @@ router.put('/input/product', productRequestDto, validateRequest,
  *          400:
  *              description: problem
  */
-router.delete('/input/product/delete', deleteProductFromBufferDto, validateRequest,
+router.delete('/input/product', deleteProductFromBufferDto, validateRequest,
   assemblyLinesController.deleteProductFromInputBuffer);
 
 /**
@@ -260,7 +260,7 @@ router.put('/output/product', productRequestDto, validateRequest,
 
 /**
  * @swagger
- * /assembly_lines/output/product/delete:
+ * /assembly_lines/output/product:
  *  delete:
  *      summary: delete a product from the output buffer
  *      requestBody:
@@ -285,7 +285,7 @@ router.put('/output/product', productRequestDto, validateRequest,
  *          400:
  *              description: problem
  */
-router.delete('/output/product/delete', deleteProductFromBufferDto, validateRequest,
+router.delete('/output/product', deleteProductFromBufferDto, validateRequest,
   assemblyLinesController.deleteProductFromOutputBuffer);
 
 module.exports = router;

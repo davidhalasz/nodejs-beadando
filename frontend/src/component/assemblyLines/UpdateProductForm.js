@@ -10,9 +10,9 @@ class UpdateProductForm extends React.Component{
             uAssemblyLineName: '',
             uStepNumber: 1,
             uProdName: '',
-            uProdQuantity: 0
+            uProdQuantity: 0,
+            uBuffer: 'input'
         };
-        this.uBuffer = 'input'
         this.formOnChange = this.formOnChange.bind(this);
     }
 
@@ -24,32 +24,47 @@ class UpdateProductForm extends React.Component{
     render() {
         return(
             <div className={"mt-2 p-4 border border-dark"}>
-                <h3>Update Product</h3>
-                <label htmlFor={"uAssemblyLineName"} >Assembly Line name</label>
-                <input type={"text"} id={"uAssemblyLineName"} name={"uAssemblyLineName"}
-                       value={this.state.uAssemblyLineName} onChange={this.formOnChange}/>
-                <br/>
-                <label htmlFor={"uStepNumber"}>Step Number in Assembly Line</label>
-                <input type={"number"} min={1} id={"uStepNumber"} name={"uStepNumber"}
-                       value={this.state.uStepNumber} onChange={this.formOnChange}/>
-                <br/>
-                <label htmlFor={"uProdName"} >Product Name</label>
-                <input type={"text"} id={"uProdName"} name={"uProdName"}
-                       value={this.state.uProdName} onChange={this.formOnChange}/>
-                <br/>
-                <label htmlFor={"uProdQuantity"}>Product Quantity</label>
-                <input type={"number"} min={0} id={"uProdQuantity"} name={"uProdQuantity"}
-                       value={this.state.uProdQuantity} onChange={this.formOnChange}/>
-                <br/>
-                <label htmlFor={"uBuffer"} >Select a Buffer</label>
-                <select id={"uBuffer"} name={"uBuffer"}
-                        value={this.uBuffer} onChange={this.formOnChange}>
-                    <option value={"input"}>Input Buffer</option>
-                    <option value={"output"}>Output Buffer</option>
-                </select>
-                <br/>
-                <br/>
-                <button className={"btn btn-primary"} onClick={() => { actions.updateProduct(this.state, this.uBuffer); }}>Submit</button>
+                <form>
+                    <h3>Update Product</h3>
+                    <label htmlFor={"uAssemblyLineName"} >Assembly Line name</label>
+                    <input type={"text"} id={"uAssemblyLineName"} name={"uAssemblyLineName"}
+                           value={this.state.uAssemblyLineName} onChange={this.formOnChange}/>
+                    <br/>
+                    <label htmlFor={"uStepNumber"}>Step Number in Assembly Line</label>
+                    <input type={"number"} min={1} id={"uStepNumber"} name={"uStepNumber"}
+                           value={this.state.uStepNumber} onChange={this.formOnChange}/>
+                    <br/>
+                    <label htmlFor={"uProdName"} >Product Name</label>
+                    <input type={"text"} id={"uProdName"} name={"uProdName"}
+                           value={this.state.uProdName} onChange={this.formOnChange}/>
+                    <br/>
+                    <label htmlFor={"uProdQuantity"}>Product Quantity</label>
+                    <input type={"number"} min={0} id={"uProdQuantity"} name={"uProdQuantity"}
+                           value={this.state.uProdQuantity} onChange={this.formOnChange}/>
+                    <br/>
+                    <label htmlFor={"uBuffer"} >Select a Buffer</label>
+                    <select id={"uBuffer"} name={"uBuffer"}
+                            value={this.state.uBuffer} onChange={this.formOnChange}>
+                        <option value={"input"}>Input Buffer</option>
+                        <option value={"output"}>Output Buffer</option>
+                    </select>
+                    <br/>
+                    <br/>
+                    <div className="btn-toolbar">
+                        <button className={"btn btn-primary mr-auto"}
+                                onClick={() => { actions.updateProduct(this.state, this.state.uBuffer); }}>
+                            Update Product
+                        </button>
+                        <button className={"btn btn-danger"}
+                                onClick={() => { actions.deleteProduct(
+                                    this.state.uAssemblyLineName, this.state.uStepNumber,
+                                    this.state.uProdName, this.state.uBuffer
+                                );
+                                }}>
+                            Delete Product
+                        </button>
+                    </div>
+                </form>
             </div>
         );
     }
