@@ -5,7 +5,7 @@ const assemblyLineRequestDto = require('./dto/assemblyLineRecordRequestDto');
 const readAssemblyLineByNameDto = require('./dto/readAssemblyLineByNameDto');
 const deleteAssemblyLineByNameDto = require('./dto/deleteAssemblyLineByNameDto');
 const productRequestDto = require('./dto/productRecordRequestDto');
-const deleteProductInInputDto = require('./dto/deleteProductInInputDto');
+const deleteProductFromBufferDto = require('./dto/deleteProductFromBufferDto');
 const { validationResult } = require('express-validator');
 
 const validateRequest = (req, res, next) => {
@@ -165,7 +165,7 @@ router.put('/input/product', productRequestDto, validateRequest,
 /**
  * @swagger
  * /assembly_lines/input/product/delete:
- *  put:
+ *  delete:
  *      summary: delete a product in the input buffer
  *      requestBody:
  *       content:
@@ -189,7 +189,7 @@ router.put('/input/product', productRequestDto, validateRequest,
  *          400:
  *              description: problem
  */
-router.put('/input/product/delete', deleteProductInInputDto, validateRequest,
+router.delete('/input/product/delete', deleteProductFromBufferDto, validateRequest,
   assemblyLinesController.deleteProductFromInputBuffer);
 
 /**
@@ -257,5 +257,35 @@ router.post('/output/product', productRequestDto, validateRequest,
  */
 router.put('/output/product', productRequestDto, validateRequest,
   assemblyLinesController.updateProductInOutputBuffer);
+
+/**
+ * @swagger
+ * /assembly_lines/output/product/delete:
+ *  delete:
+ *      summary: delete a product from the output buffer
+ *      requestBody:
+ *       content:
+ *              application/json:
+ *                  schema:
+ *                    type: object
+ *                    required: true
+ *                    properties:
+ *                       assemblyLineName:
+ *                          type: string
+ *                          example: ALINE-1
+ *                       steps:
+ *                          type: number
+ *                          example: 1
+ *                       prodName:
+ *                          type: string
+ *                          example: cogs
+ *      responses:
+ *          200:
+ *              description: product has been deleted
+ *          400:
+ *              description: problem
+ */
+router.delete('/output/product/delete', deleteProductFromBufferDto, validateRequest,
+  assemblyLinesController.deleteProductFromOutputBuffer);
 
 module.exports = router;

@@ -101,3 +101,14 @@ exports.updateProductInOutputBuffer = (req, res, next) => {
     .then(assemblyLine => res.send(assemblyLine))
     .catch(err => res.status(400).send({ error: err }));
 };
+
+exports.deleteProductFromOutputBuffer = (req, res, next) => {
+  if (!validationResult(req).isEmpty()) {
+    logger.info('Validation error');
+    res.status(400).send({ errors: validationResult(req).array() });
+    return;
+  }
+  service.deleteProductFromOutputBuffer(req.body)
+    .then(assemblyLine => res.send(assemblyLine))
+    .catch(err => res.status(400).send({ error: err }));
+};

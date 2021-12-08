@@ -135,10 +135,10 @@ const deleteProductFromInputBuffer = ({
     }, {
       new: true
     }).then((documents) => {
-      logger.info('Product has been deleted in input buffer');
+      logger.info('Product has been deleted from input buffer');
       resolve(documents);
     }).catch((err) => {
-      logger.error('Deleting product in input buffer is not success');
+      logger.error('Deleting product from input buffer is not success');
       reject(err);
     });
   });
@@ -191,6 +191,28 @@ const updateProductInOutputBuffer = ({
   });
 };
 
+const deleteProductFromOutputBuffer = ({
+  assemblyLineName, steps,
+  prodName
+}) => {
+  return new Promise((resolve, reject) => {
+    const filter = { name: assemblyLineName };
+    AssemblyLine.findOneAndUpdate(filter, {
+      $pull: {
+        [`steps.${steps - 1}.outputBuffer`]: { prodName: prodName }
+      }
+    }, {
+      new: true
+    }).then((documents) => {
+      logger.info('Product has been deleted from output buffer');
+      resolve(documents);
+    }).catch((err) => {
+      logger.error('Deleting product from output buffer is not success');
+      reject(err);
+    });
+  });
+};
+
 module.exports = {
   createAssemblyLine: createAssemblyLine,
   readAssemblyLines: readAssemblyLines,
@@ -200,5 +222,6 @@ module.exports = {
   updateProductInInputBuffer: updateProductInInputBuffer,
   deleteProductFromInputBuffer: deleteProductFromInputBuffer,
   addToOutputBuffer: addToOutputBuffer,
-  updateProductInOutputBuffer: updateProductInOutputBuffer
+  updateProductInOutputBuffer: updateProductInOutputBuffer,
+  deleteProductFromOutputBuffer: deleteProductFromOutputBuffer
 };
