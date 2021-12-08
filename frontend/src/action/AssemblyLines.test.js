@@ -109,7 +109,7 @@ describe('Testing AssemblyLines Actions', () => {
         expect(axios.post).toHaveBeenCalledTimes(1);
     });
 
-    it('updates a product to successfully', async () => {
+    it('updates a product successfully', async () => {
         // given
         axios.put.mockReturnValue(Promise.resolve());
         // when
@@ -117,6 +117,25 @@ describe('Testing AssemblyLines Actions', () => {
         // then
         expect(axios.put).toHaveBeenCalledTimes(1);
         expect(dispatcher.dispatch).toHaveBeenCalledTimes(1);
+    });
+
+    it('delete a product successfully', async () => {
+        // given
+        axios.delete.mockReturnValue(Promise.resolve());
+        // when
+        await actions.deleteProduct(assemblyLines[0]);
+        // then
+        expect(axios.delete).toHaveBeenCalledTimes(1);
+        expect(dispatcher.dispatch).toHaveBeenCalledTimes(1);
+    });
+
+    it('delete a product unsuccessfully', async () => {
+        // given
+        axios.delete.mockReturnValue(Promise.reject(new Error()));
+        // when
+        await actions.deleteProduct(assemblyLines[0]);
+        // then
+        expect(axios.delete).toHaveBeenCalledTimes(1);
     });
 
     it('updates a product unsuccessfully', async () => {
