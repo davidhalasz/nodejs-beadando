@@ -122,6 +122,28 @@ const updateProductInInputBuffer = ({
   });
 };
 
+const deleteProductFromInputBuffer = ({
+  assemblyLineName, steps,
+  prodName
+}) => {
+  return new Promise((resolve, reject) => {
+    const filter = { name: assemblyLineName };
+    AssemblyLine.findOneAndUpdate(filter, {
+      $pull: {
+        [`steps.${steps - 1}.inputBuffer`]: { prodName: prodName }
+      }
+    }, {
+      new: true
+    }).then((documents) => {
+      logger.info('Product has been deleted in input buffer');
+      resolve(documents);
+    }).catch((err) => {
+      logger.error('Deleting product in input buffer is not success');
+      reject(err);
+    });
+  });
+};
+
 const addToOutputBuffer = ({
   assemblyLineName, steps,
   prodName, prodQuantity
@@ -176,6 +198,7 @@ module.exports = {
   deleteAssemblyLineByName: deleteAssemblyLineByName,
   addToInputBuffer: addToInputBuffer,
   updateProductInInputBuffer: updateProductInInputBuffer,
+  deleteProductFromInputBuffer: deleteProductFromInputBuffer,
   addToOutputBuffer: addToOutputBuffer,
   updateProductInOutputBuffer: updateProductInOutputBuffer
 };

@@ -69,6 +69,17 @@ exports.updateProductInInputBuffer = (req, res, next) => {
     .catch(err => res.status(400).send({ error: err }));
 };
 
+exports.deleteProductFromInputBuffer = (req, res, next) => {
+  if (!validationResult(req).isEmpty()) {
+    logger.info('Validation error');
+    res.status(400).send({ errors: validationResult(req).array() });
+    return;
+  }
+  service.deleteProductFromInputBuffer(req.body)
+    .then(assemblyLine => res.send(assemblyLine))
+    .catch(err => res.status(400).send({ error: err }));
+};
+
 exports.addProductToOutputBuffer = (req, res, next) => {
   if (!validationResult(req).isEmpty()) {
     logger.info('Validation error');

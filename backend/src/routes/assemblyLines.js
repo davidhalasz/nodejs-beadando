@@ -5,6 +5,7 @@ const assemblyLineRequestDto = require('./dto/assemblyLineRecordRequestDto');
 const readAssemblyLineByNameDto = require('./dto/readAssemblyLineByNameDto');
 const deleteAssemblyLineByNameDto = require('./dto/deleteAssemblyLineByNameDto');
 const productRequestDto = require('./dto/productRecordRequestDto');
+const deleteProductInInputDto = require('./dto/deleteProductInInputDto');
 const { validationResult } = require('express-validator');
 
 const validateRequest = (req, res, next) => {
@@ -160,6 +161,36 @@ router.post('/input/product', productRequestDto, validateRequest,
  */
 router.put('/input/product', productRequestDto, validateRequest,
   assemblyLinesController.updateProductInInputBuffer);
+
+/**
+ * @swagger
+ * /assembly_lines/input/product/delete:
+ *  put:
+ *      summary: delete a product in the input buffer
+ *      requestBody:
+ *       content:
+ *              application/json:
+ *                  schema:
+ *                    type: object
+ *                    required: true
+ *                    properties:
+ *                       assemblyLineName:
+ *                          type: string
+ *                          example: ALINE-1
+ *                       steps:
+ *                          type: number
+ *                          example: 1
+ *                       prodName:
+ *                          type: string
+ *                          example: cogs
+ *      responses:
+ *          200:
+ *              description: product has been deleted
+ *          400:
+ *              description: problem
+ */
+router.put('/input/product/delete', deleteProductInInputDto, validateRequest,
+  assemblyLinesController.deleteProductFromInputBuffer);
 
 /**
  * @swagger
