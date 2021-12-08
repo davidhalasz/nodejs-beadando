@@ -16,19 +16,33 @@ class AssemblyLineRecordingForm extends React.Component{
         this.setState({[name] : value});
     }
 
+    resetForm() {
+        this.setState({
+            name: '',
+            numberOfSteps: 1
+        });
+    }
+
     render() {
         return(
             <div className={"mt-2 p-4 border border-dark"}>
                 <h3>Create New Assembly Line</h3>
-                <form>
+
                     <label htmlFor={"name"} >Assembly Line name</label>
-                    <input type={"text"} id={"name"} name={"name"} value={this.state.name} onChange={this.formOnChange}/>
+                    <input type={"text"} id={"name"}
+                           name={"name"} value={this.state.name}
+                           onChange={this.formOnChange}/>
                     <br/>
                     <label htmlFor={"numberOfSteps"}>Number of steps</label>
-                    <input type={"number"} min={1} id={"numberOfSteps"} name={"numberOfSteps"} value={this.state.numberOfSteps} onChange={this.formOnChange}/>
+                    <input type={"number"} min={1} id={"numberOfSteps"}
+                           name={"numberOfSteps"} value={this.state.numberOfSteps}
+                           onChange={this.formOnChange}/>
                     <br/>
-                    <button onClick={()=> actions.recordAssemblyLine(this.state)} className={"btn btn-primary"}>Submit</button>
-                </form>
+                    <button className={"btn btn-primary"} onClick={()=> {
+                        actions.recordAssemblyLine(this.state);
+                        this.resetForm();
+                    }}>Submit</button>
+
             </div>
         );
     }

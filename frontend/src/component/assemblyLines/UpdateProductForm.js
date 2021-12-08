@@ -21,10 +21,19 @@ class UpdateProductForm extends React.Component{
         this.setState({[name] : value});
     }
 
+    resetForm() {
+        this.setState({
+            uAssemblyLineName: '',
+            uStepNumber: 1,
+            uProdName: '',
+            uProdQuantity: 0,
+            uBuffer: 'input'
+        });
+    }
+
     render() {
         return(
             <div className={"mt-2 p-4 border border-dark"}>
-                <form>
                     <h3>Update Product</h3>
                     <label htmlFor={"uAssemblyLineName"} >Assembly Line name</label>
                     <input type={"text"} id={"uAssemblyLineName"} name={"uAssemblyLineName"}
@@ -52,19 +61,22 @@ class UpdateProductForm extends React.Component{
                     <br/>
                     <div className="btn-toolbar">
                         <button className={"btn btn-primary mr-auto"}
-                                onClick={() => { actions.updateProduct(this.state, this.state.uBuffer); }}>
+                                onClick={() => {
+                                    actions.updateProduct(this.state, this.state.uBuffer);
+                                    this.resetForm();
+                                }}>
                             Update Product
                         </button>
                         <button className={"btn btn-danger"}
-                                onClick={() => { actions.deleteProduct(
-                                    this.state.uAssemblyLineName, this.state.uStepNumber,
-                                    this.state.uProdName, this.state.uBuffer
-                                );
+                                onClick={() => {
+                                    actions.deleteProduct(
+                                        this.state.uAssemblyLineName, this.state.uStepNumber,
+                                        this.state.uProdName, this.state.uBuffer);
+                                    this.resetForm();
                                 }}>
                             Delete Product
                         </button>
                     </div>
-                </form>
             </div>
         );
     }

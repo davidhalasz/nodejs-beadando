@@ -21,11 +21,21 @@ class ProductRecordingForm extends React.Component{
         this.setState({[name] : value});
     }
 
+    resetForm() {
+        this.setState({
+            assemblyLineName: '',
+            stepNumber: 1,
+            prodName: '',
+            prodQuantity: 0,
+            buffer: 'input'
+        });
+    }
+
     render() {
         return(
             <div className={"mt-2 p-4 border border-dark"}>
                 <h3>Add Product</h3>
-                <form>
+
                     <label htmlFor={"assemblyLineName"} >Assembly Line name</label>
                     <input type={"text"} id={"assemblyLineName"} name={"assemblyLineName"}
                            value={this.state.assemblyLineName} onChange={this.formOnChange}/>
@@ -50,8 +60,11 @@ class ProductRecordingForm extends React.Component{
                     </select>
                     <br/>
                     <br/>
-                    <button className={"btn btn-primary"} onClick={() => { actions.recordProduct(this.state, this.state.buffer); }}>Submit</button>
-                </form>
+                    <button className={"btn btn-primary"} onClick={() => {
+                        actions.recordProduct(this.state, this.state.buffer);
+                        this.resetForm();
+                    }}>Submit</button>
+
             </div>
         );
     }
